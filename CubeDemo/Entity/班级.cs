@@ -31,6 +31,14 @@ namespace NewLife.School.Entity
         [BindColumn("xxx_Nameyyy", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
+        private String _CreateUser;
+        /// <summary>创建者</summary>
+        [DisplayName("创建者")]
+        [Description("创建者")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("CreateUser", "创建者", "")]
+        public String CreateUser { get { return _CreateUser; } set { if (OnPropertyChanging(__.CreateUser, value)) { _CreateUser = value; OnPropertyChanged(__.CreateUser); } } }
+
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
         [DisplayName("创建者")]
@@ -54,6 +62,14 @@ namespace NewLife.School.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("CreateIP", "创建地址", "")]
         public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
+
+        private String _UpdateUser;
+        /// <summary>更新者</summary>
+        [DisplayName("更新者")]
+        [Description("更新者")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("UpdateUser", "更新者", "")]
+        public String UpdateUser { get { return _UpdateUser; } set { if (OnPropertyChanging(__.UpdateUser, value)) { _UpdateUser = value; OnPropertyChanged(__.UpdateUser); } } }
 
         private Int32 _UpdateUserID;
         /// <summary>更新者</summary>
@@ -100,9 +116,11 @@ namespace NewLife.School.Entity
                 {
                     case __.ID : return _ID;
                     case __.Name : return _Name;
+                    case __.CreateUser : return _CreateUser;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
+                    case __.UpdateUser : return _UpdateUser;
                     case __.UpdateUserID : return _UpdateUserID;
                     case __.UpdateTime : return _UpdateTime;
                     case __.UpdateIP : return _UpdateIP;
@@ -116,9 +134,11 @@ namespace NewLife.School.Entity
                 {
                     case __.ID : _ID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
+                    case __.CreateUser : _CreateUser = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
+                    case __.UpdateUser : _UpdateUser = Convert.ToString(value); break;
                     case __.UpdateUserID : _UpdateUserID = value.ToInt(); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
@@ -140,6 +160,9 @@ namespace NewLife.School.Entity
             public static readonly Field Name = FindByName(__.Name);
 
             /// <summary>创建者</summary>
+            public static readonly Field CreateUser = FindByName(__.CreateUser);
+
+            /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
 
             /// <summary>创建时间</summary>
@@ -147,6 +170,9 @@ namespace NewLife.School.Entity
 
             /// <summary>创建地址</summary>
             public static readonly Field CreateIP = FindByName(__.CreateIP);
+
+            /// <summary>更新者</summary>
+            public static readonly Field UpdateUser = FindByName(__.UpdateUser);
 
             /// <summary>更新者</summary>
             public static readonly Field UpdateUserID = FindByName(__.UpdateUserID);
@@ -173,6 +199,9 @@ namespace NewLife.School.Entity
             public const String Name = "Name";
 
             /// <summary>创建者</summary>
+            public const String CreateUser = "CreateUser";
+
+            /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
 
             /// <summary>创建时间</summary>
@@ -180,6 +209,9 @@ namespace NewLife.School.Entity
 
             /// <summary>创建地址</summary>
             public const String CreateIP = "CreateIP";
+
+            /// <summary>更新者</summary>
+            public const String UpdateUser = "UpdateUser";
 
             /// <summary>更新者</summary>
             public const String UpdateUserID = "UpdateUserID";
@@ -207,6 +239,9 @@ namespace NewLife.School.Entity
         String Name { get; set; }
 
         /// <summary>创建者</summary>
+        String CreateUser { get; set; }
+
+        /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }
 
         /// <summary>创建时间</summary>
@@ -214,6 +249,9 @@ namespace NewLife.School.Entity
 
         /// <summary>创建地址</summary>
         String CreateIP { get; set; }
+
+        /// <summary>更新者</summary>
+        String UpdateUser { get; set; }
 
         /// <summary>更新者</summary>
         Int32 UpdateUserID { get; set; }

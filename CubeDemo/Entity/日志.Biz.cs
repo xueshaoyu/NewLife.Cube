@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -21,19 +21,27 @@ using XCode.Configuration;
 using XCode.DataAccessLayer;
 using XCode.Membership;
 
-namespace NewLife.School.Entity
+namespace XCode.Membership
 {
-    /// <summary>交易</summary>
-    public partial class Trade : Entity<Trade>
+    /// <summary>日志</summary>
+    [Serializable]
+    [ModelCheckMode(ModelCheckModes.CheckTableWhenFirstUse)]
+    public class Log : Log<Log> { }
+
+    /// <summary>日志</summary>
+    public partial class Log<TEntity> : Entity<TEntity> where TEntity : Log<TEntity>, new()
     {
         #region 对象操作
-        static Trade()
+        static Log()
         {
+            // 用于引发基类的静态构造函数，所有层次的泛型实体类都应该有一个
+            var entity = new TEntity();
+
             // 累加字段
-            //Meta.Factory.AdditionalFields.Add(__.Logins);
+            //var df = Meta.Factory.AdditionalFields;
+            //df.Add(__.LinkID);
 
             // 过滤器 UserModule、TimeModule、IPModule
-
             Meta.Modules.Add<UserModule>();
             Meta.Modules.Add<TimeModule>();
             Meta.Modules.Add<IPModule>();
@@ -47,6 +55,14 @@ namespace NewLife.School.Entity
             if (!HasDirty) return;
 
             // 在新插入数据或者修改了指定字段时进行修正
+            // 处理当前已登录用户信息，可以由UserModule过滤器代劳
+            /*var user = ManageProvider.User;
+            if (user != null)
+            {
+                if (isNew && !Dirtys[nameof(CreateUserID)]) CreateUserID = user.ID;
+            }*/
+            //if (isNew && !Dirtys[nameof(CreateTime)]) CreateTime = DateTime.Now;
+            //if (isNew && !Dirtys[nameof(CreateIP)]) CreateIP = ManageProvider.UserHost;
         }
 
         ///// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
@@ -56,29 +72,21 @@ namespace NewLife.School.Entity
         //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
         //    if (Meta.Session.Count > 0) return;
 
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化Trade[交易]数据……");
+        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化TEntity[日志]数据……");
 
-        //    var entity = new Trade();
+        //    var entity = new TEntity();
         //    entity.ID = 0;
-        //    entity.NodeID = 0;
-        //    entity.Tid = "abc";
-        //    entity.Status = 0;
-        //    entity.PayStatus = 0;
-        //    entity.ShipStatus = 0;
-        //    entity.CreateIPReceiverPhone = "abc";
-        //    entity.ReceiverMobile = "abc";
-        //    entity.ReceiverState = "abc";
-        //    entity.ReceiverCity = "abc";
-        //    entity.ReceiverDistrict = "abc";
-        //    entity.ReceiverAddress = "abc";
-        //    entity.BuyerName = "abc";
-        //    entity.Created = 0;
-        //    entity.Modified = 0;
-        //    entity.IsSend = 0;
-        //    entity.ErrorMsg = "abc";
+        //    entity.Category = "abc";
+        //    entity.Action = "abc";
+        //    entity.LinkID = 0;
+        //    entity.UserName = "abc";
+        //    entity.CreateUserID = 0;
+        //    entity.CreateIP = "abc";
+        //    entity.CreateTime = DateTime.Now;
+        //    entity.Remark = "abc";
         //    entity.Insert();
 
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化Trade[交易]数据！");
+        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化TEntity[日志]数据！");
         //}
 
         ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
@@ -100,10 +108,10 @@ namespace NewLife.School.Entity
         #endregion
 
         #region 扩展查询
-        /// <summary>根据订单编号查找</summary>
-        /// <param name="id">订单编号</param>
+        /// <summary>根据编号查找</summary>
+        /// <param name="id">编号</param>
         /// <returns>实体对象</returns>
-        public static Trade FindByID(Int32 id)
+        public static TEntity FindByID(Int32 id)
         {
             if (id <= 0) return null;
 
@@ -111,9 +119,31 @@ namespace NewLife.School.Entity
             if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.ID == id);
 
             // 单对象缓存
-            //return Meta.SingleCache[id];
+            return Meta.SingleCache[id];
 
-            return Find(_.ID == id);
+            //return Find(_.ID == id);
+        }
+
+        /// <summary>根据类别查找</summary>
+        /// <param name="category">类别</param>
+        /// <returns>实体列表</returns>
+        public static IList<TEntity> FindAllByCategory(String category)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.Category == category);
+
+            return FindAll(_.Category == category);
+        }
+
+        /// <summary>根据用户编号查找</summary>
+        /// <param name="createuserid">用户编号</param>
+        /// <returns>实体列表</returns>
+        public static IList<TEntity> FindAllByCreateUserID(Int32 createuserid)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.CreateUserID == createuserid);
+
+            return FindAll(_.CreateUserID == createuserid);
         }
         #endregion
 

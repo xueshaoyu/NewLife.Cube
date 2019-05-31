@@ -5,14 +5,17 @@ using XCode;
 using XCode.Configuration;
 using XCode.DataAccessLayer;
 
-namespace NewLife.Cube.Entity
+namespace XCode.Membership
 {
-    /// <summary>应用日志。用于OAuthServer的子系统</summary>
+    /// <summary>日志</summary>
     [Serializable]
     [DataObject]
-    [Description("应用日志。用于OAuthServer的子系统")]
-    [BindTable("AppLog", Description = "应用日志。用于OAuthServer的子系统", ConnName = "Log", DbType = DatabaseType.None)]
-    public partial class AppLog : IAppLog
+    [Description("日志")]
+    [BindIndex("IX_Log_Category", false, "Category")]
+    [BindIndex("IX_Log_CreateUserID", false, "CreateUserID")]
+    [BindIndex("IX_Log_CreateTime", false, "CreateTime")]
+    [BindTable("Log", Description = "日志", ConnName = "Log", DbType = DatabaseType.None)]
+    public partial class Log<TEntity> : ILog
     {
         #region 属性
         private Int32 _ID;
@@ -23,13 +26,13 @@ namespace NewLife.Cube.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private Int32 _AppID;
-        /// <summary>应用</summary>
-        [DisplayName("应用")]
-        [Description("应用")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("AppID", "应用", "")]
-        public Int32 AppID { get { return _AppID; } set { if (OnPropertyChanging(__.AppID, value)) { _AppID = value; OnPropertyChanged(__.AppID); } } }
+        private String _Category;
+        /// <summary>类别</summary>
+        [DisplayName("类别")]
+        [Description("类别")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Category", "类别", "")]
+        public String Category { get { return _Category; } set { if (OnPropertyChanging(__.Category, value)) { _Category = value; OnPropertyChanged(__.Category); } } }
 
         private String _Action;
         /// <summary>操作</summary>
@@ -39,28 +42,28 @@ namespace NewLife.Cube.Entity
         [BindColumn("Action", "操作", "")]
         public String Action { get { return _Action; } set { if (OnPropertyChanging(__.Action, value)) { _Action = value; OnPropertyChanged(__.Action); } } }
 
-        private Boolean _Success;
-        /// <summary>成功</summary>
-        [DisplayName("成功")]
-        [Description("成功")]
+        private Int32 _LinkID;
+        /// <summary>链接</summary>
+        [DisplayName("链接")]
+        [Description("链接")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Success", "成功", "")]
-        public Boolean Success { get { return _Success; } set { if (OnPropertyChanging(__.Success, value)) { _Success = value; OnPropertyChanged(__.Success); } } }
+        [BindColumn("LinkID", "链接", "")]
+        public Int32 LinkID { get { return _LinkID; } set { if (OnPropertyChanging(__.LinkID, value)) { _LinkID = value; OnPropertyChanged(__.LinkID); } } }
 
-        private String _Remark;
-        /// <summary>详细信息</summary>
-        [DisplayName("详细信息")]
-        [Description("详细信息")]
-        [DataObjectField(false, false, true, 2000)]
-        [BindColumn("Remark", "详细信息", "")]
-        public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
+        private String _UserName;
+        /// <summary>用户名</summary>
+        [DisplayName("用户名")]
+        [Description("用户名")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("UserName", "用户名", "")]
+        public String UserName { get { return _UserName; } set { if (OnPropertyChanging(__.UserName, value)) { _UserName = value; OnPropertyChanged(__.UserName); } } }
 
         private Int32 _CreateUserID;
-        /// <summary>创建者</summary>
-        [DisplayName("创建者")]
-        [Description("创建者")]
+        /// <summary>用户编号</summary>
+        [DisplayName("用户编号")]
+        [Description("用户编号")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("CreateUserID", "创建者", "")]
+        [BindColumn("CreateUserID", "用户编号", "")]
         public Int32 CreateUserID { get { return _CreateUserID; } set { if (OnPropertyChanging(__.CreateUserID, value)) { _CreateUserID = value; OnPropertyChanged(__.CreateUserID); } } }
 
         private String _CreateIP;
@@ -78,6 +81,14 @@ namespace NewLife.Cube.Entity
         [DataObjectField(false, false, true, 0)]
         [BindColumn("CreateTime", "时间", "")]
         public DateTime CreateTime { get { return _CreateTime; } set { if (OnPropertyChanging(__.CreateTime, value)) { _CreateTime = value; OnPropertyChanged(__.CreateTime); } } }
+
+        private String _Remark;
+        /// <summary>详细信息</summary>
+        [DisplayName("详细信息")]
+        [Description("详细信息")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("Remark", "详细信息", "")]
+        public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
         #endregion
 
         #region 获取/设置 字段值
@@ -91,13 +102,14 @@ namespace NewLife.Cube.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
-                    case __.AppID : return _AppID;
+                    case __.Category : return _Category;
                     case __.Action : return _Action;
-                    case __.Success : return _Success;
-                    case __.Remark : return _Remark;
+                    case __.LinkID : return _LinkID;
+                    case __.UserName : return _UserName;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateIP : return _CreateIP;
                     case __.CreateTime : return _CreateTime;
+                    case __.Remark : return _Remark;
                     default: return base[name];
                 }
             }
@@ -106,13 +118,14 @@ namespace NewLife.Cube.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.AppID : _AppID = value.ToInt(); break;
+                    case __.Category : _Category = Convert.ToString(value); break;
                     case __.Action : _Action = Convert.ToString(value); break;
-                    case __.Success : _Success = value.ToBoolean(); break;
-                    case __.Remark : _Remark = Convert.ToString(value); break;
+                    case __.LinkID : _LinkID = value.ToInt(); break;
+                    case __.UserName : _UserName = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
+                    case __.Remark : _Remark = Convert.ToString(value); break;
                     default: base[name] = value; break;
                 }
             }
@@ -120,25 +133,25 @@ namespace NewLife.Cube.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得应用日志字段信息的快捷方式</summary>
+        /// <summary>取得日志字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
-            /// <summary>应用</summary>
-            public static readonly Field AppID = FindByName(__.AppID);
+            /// <summary>类别</summary>
+            public static readonly Field Category = FindByName(__.Category);
 
             /// <summary>操作</summary>
             public static readonly Field Action = FindByName(__.Action);
 
-            /// <summary>成功</summary>
-            public static readonly Field Success = FindByName(__.Success);
+            /// <summary>链接</summary>
+            public static readonly Field LinkID = FindByName(__.LinkID);
 
-            /// <summary>详细信息</summary>
-            public static readonly Field Remark = FindByName(__.Remark);
+            /// <summary>用户名</summary>
+            public static readonly Field UserName = FindByName(__.UserName);
 
-            /// <summary>创建者</summary>
+            /// <summary>用户编号</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
 
             /// <summary>IP地址</summary>
@@ -147,28 +160,31 @@ namespace NewLife.Cube.Entity
             /// <summary>时间</summary>
             public static readonly Field CreateTime = FindByName(__.CreateTime);
 
+            /// <summary>详细信息</summary>
+            public static readonly Field Remark = FindByName(__.Remark);
+
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
 
-        /// <summary>取得应用日志字段名称的快捷方式</summary>
+        /// <summary>取得日志字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
             public const String ID = "ID";
 
-            /// <summary>应用</summary>
-            public const String AppID = "AppID";
+            /// <summary>类别</summary>
+            public const String Category = "Category";
 
             /// <summary>操作</summary>
             public const String Action = "Action";
 
-            /// <summary>成功</summary>
-            public const String Success = "Success";
+            /// <summary>链接</summary>
+            public const String LinkID = "LinkID";
 
-            /// <summary>详细信息</summary>
-            public const String Remark = "Remark";
+            /// <summary>用户名</summary>
+            public const String UserName = "UserName";
 
-            /// <summary>创建者</summary>
+            /// <summary>用户编号</summary>
             public const String CreateUserID = "CreateUserID";
 
             /// <summary>IP地址</summary>
@@ -176,30 +192,33 @@ namespace NewLife.Cube.Entity
 
             /// <summary>时间</summary>
             public const String CreateTime = "CreateTime";
+
+            /// <summary>详细信息</summary>
+            public const String Remark = "Remark";
         }
         #endregion
     }
 
-    /// <summary>应用日志。用于OAuthServer的子系统接口</summary>
-    public partial interface IAppLog
+    /// <summary>日志接口</summary>
+    public partial interface ILog
     {
         #region 属性
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
-        /// <summary>应用</summary>
-        Int32 AppID { get; set; }
+        /// <summary>类别</summary>
+        String Category { get; set; }
 
         /// <summary>操作</summary>
         String Action { get; set; }
 
-        /// <summary>成功</summary>
-        Boolean Success { get; set; }
+        /// <summary>链接</summary>
+        Int32 LinkID { get; set; }
 
-        /// <summary>详细信息</summary>
-        String Remark { get; set; }
+        /// <summary>用户名</summary>
+        String UserName { get; set; }
 
-        /// <summary>创建者</summary>
+        /// <summary>用户编号</summary>
         Int32 CreateUserID { get; set; }
 
         /// <summary>IP地址</summary>
@@ -207,6 +226,9 @@ namespace NewLife.Cube.Entity
 
         /// <summary>时间</summary>
         DateTime CreateTime { get; set; }
+
+        /// <summary>详细信息</summary>
+        String Remark { get; set; }
         #endregion
 
         #region 获取/设置 字段值
