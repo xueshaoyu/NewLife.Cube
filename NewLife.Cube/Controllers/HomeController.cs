@@ -1,4 +1,5 @@
 ﻿#if __CORE__
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 #else
 using System.Web;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 namespace NewLife.Cube.Controllers
 {
     /// <summary>主页面</summary>
-    //[AllowAnonymous]
+    [AllowAnonymous]
     public class CubeHomeController : Controller
     {
         /// <summary>主页面</summary>
