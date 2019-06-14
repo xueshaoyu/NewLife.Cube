@@ -5,72 +5,80 @@ using XCode;
 using XCode.Configuration;
 using XCode.DataAccessLayer;
 
-namespace NewLife.School.Entity
+namespace Pig.Repository.Entity
 {
-    /// <summary>学生</summary>
+    /// <summary>屠宰场收购信息</summary>
     [Serializable]
     [DataObject]
-    [Description("学生")]
-    [BindIndex("IX_Student_ClassID", false, "ClassID")]
-    [BindTable("Student", Description = "学生", ConnName = "School", DbType = DatabaseType.SqlServer)]
-    public partial class Student : IStudent
+    [Description("屠宰场收购信息")]
+    [BindIndex("IX_BuyInfo_PubTime", false, "PubTime")]
+    [BindTable("BuyInfo", Description = "屠宰场收购信息", ConnName = "Pig", DbType = DatabaseType.SqlServer)]
+    public partial class BuyInfo : IBuyInfo
     {
         #region 属性
-        private Int32 _ID;
+        private Int32 _Id;
         /// <summary>编号</summary>
         [DisplayName("编号")]
         [Description("编号")]
         [DataObjectField(true, true, false, 0)]
-        [BindColumn("ID", "编号", "int")]
-        public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
+        [BindColumn("Id", "编号", "int")]
+        public Int32 Id { get { return _Id; } set { if (OnPropertyChanging(__.Id, value)) { _Id = value; OnPropertyChanged(__.Id); } } }
 
-        private Int32 _ClassID;
-        /// <summary>班级</summary>
-        [DisplayName("班级")]
-        [Description("班级")]
+        private Int32 _BuyerId;
+        /// <summary>屠宰场</summary>
+        [DisplayName("屠宰场")]
+        [Description("屠宰场")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("ClassID", "班级", "int")]
-        public Int32 ClassID { get { return _ClassID; } set { if (OnPropertyChanging(__.ClassID, value)) { _ClassID = value; OnPropertyChanged(__.ClassID); } } }
+        [BindColumn("BuyerId", "屠宰场", "int")]
+        public Int32 BuyerId { get { return _BuyerId; } set { if (OnPropertyChanging(__.BuyerId, value)) { _BuyerId = value; OnPropertyChanged(__.BuyerId); } } }
 
-        private String _Name;
-        /// <summary>名称</summary>
-        [DisplayName("名称")]
-        [Description("名称")]
+        private String _PubTime;
+        /// <summary>信息发布时间</summary>
+        [DisplayName("信息发布时间")]
+        [Description("信息发布时间")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称", "nvarchar(50)", Master = true)]
-        public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
+        [BindColumn("PubTime", "信息发布时间", "nvarchar(50)", Master = true)]
+        public String PubTime { get { return _PubTime; } set { if (OnPropertyChanging(__.PubTime, value)) { _PubTime = value; OnPropertyChanged(__.PubTime); } } }
 
-        private SexKind _Sex;
-        /// <summary>性别</summary>
-        [DisplayName("性别")]
-        [Description("性别")]
+        private String _Price;
+        /// <summary>单价</summary>
+        [DisplayName("单价")]
+        [Description("单价")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Price", "单价", "nvarchar(50)")]
+        public String Price { get { return _Price; } set { if (OnPropertyChanging(__.Price, value)) { _Price = value; OnPropertyChanged(__.Price); } } }
+
+        private Int32 _BuyNumber;
+        /// <summary>购买数量</summary>
+        [DisplayName("购买数量")]
+        [Description("购买数量")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Sex", "性别", "int")]
-        public SexKind Sex { get { return _Sex; } set { if (OnPropertyChanging(__.Sex, value)) { _Sex = value; OnPropertyChanged(__.Sex); } } }
+        [BindColumn("BuyNumber", "购买数量", "int")]
+        public Int32 BuyNumber { get { return _BuyNumber; } set { if (OnPropertyChanging(__.BuyNumber, value)) { _BuyNumber = value; OnPropertyChanged(__.BuyNumber); } } }
 
-        private Int32 _Age;
-        /// <summary>年龄</summary>
-        [DisplayName("年龄")]
-        [Description("年龄")]
+        private DateTime _StartTime;
+        /// <summary>开始时间</summary>
+        [DisplayName("开始时间")]
+        [Description("开始时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("StartTime", "开始时间", "datetime")]
+        public DateTime StartTime { get { return _StartTime; } set { if (OnPropertyChanging(__.StartTime, value)) { _StartTime = value; OnPropertyChanged(__.StartTime); } } }
+
+        private DateTime _EndTime;
+        /// <summary>结束时间</summary>
+        [DisplayName("结束时间")]
+        [Description("结束时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("EndTime", "结束时间", "datetime")]
+        public DateTime EndTime { get { return _EndTime; } set { if (OnPropertyChanging(__.EndTime, value)) { _EndTime = value; OnPropertyChanged(__.EndTime); } } }
+
+        private Int32 _State;
+        /// <summary>状态</summary>
+        [DisplayName("状态")]
+        [Description("状态")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Age", "年龄", "int")]
-        public Int32 Age { get { return _Age; } set { if (OnPropertyChanging(__.Age, value)) { _Age = value; OnPropertyChanged(__.Age); } } }
-
-        private String _Mobile;
-        /// <summary>手机</summary>
-        [DisplayName("手机")]
-        [Description("手机")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Mobile", "手机", "nvarchar(50)")]
-        public String Mobile { get { return _Mobile; } set { if (OnPropertyChanging(__.Mobile, value)) { _Mobile = value; OnPropertyChanged(__.Mobile); } } }
-
-        private String _Address;
-        /// <summary>地址</summary>
-        [DisplayName("地址")]
-        [Description("地址")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Address", "地址", "nvarchar(50)")]
-        public String Address { get { return _Address; } set { if (OnPropertyChanging(__.Address, value)) { _Address = value; OnPropertyChanged(__.Address); } } }
+        [BindColumn("State", "状态", "int")]
+        public Int32 State { get { return _State; } set { if (OnPropertyChanging(__.State, value)) { _State = value; OnPropertyChanged(__.State); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -119,14 +127,6 @@ namespace NewLife.School.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("UpdateIP", "更新地址", "nvarchar(50)")]
         public String UpdateIP { get { return _UpdateIP; } set { if (OnPropertyChanging(__.UpdateIP, value)) { _UpdateIP = value; OnPropertyChanged(__.UpdateIP); } } }
-
-        private String _Remark;
-        /// <summary>备注</summary>
-        [DisplayName("备注")]
-        [Description("备注")]
-        [DataObjectField(false, false, true, 200)]
-        [BindColumn("Remark", "备注", "nvarchar(200)")]
-        public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
         #endregion
 
         #region 获取/设置 字段值
@@ -139,20 +139,20 @@ namespace NewLife.School.Entity
             {
                 switch (name)
                 {
-                    case __.ID : return _ID;
-                    case __.ClassID : return _ClassID;
-                    case __.Name : return _Name;
-                    case __.Sex : return _Sex;
-                    case __.Age : return _Age;
-                    case __.Mobile : return _Mobile;
-                    case __.Address : return _Address;
+                    case __.Id : return _Id;
+                    case __.BuyerId : return _BuyerId;
+                    case __.PubTime : return _PubTime;
+                    case __.Price : return _Price;
+                    case __.BuyNumber : return _BuyNumber;
+                    case __.StartTime : return _StartTime;
+                    case __.EndTime : return _EndTime;
+                    case __.State : return _State;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
                     case __.UpdateUserID : return _UpdateUserID;
                     case __.UpdateTime : return _UpdateTime;
                     case __.UpdateIP : return _UpdateIP;
-                    case __.Remark : return _Remark;
                     default: return base[name];
                 }
             }
@@ -160,20 +160,20 @@ namespace NewLife.School.Entity
             {
                 switch (name)
                 {
-                    case __.ID : _ID = Convert.ToInt32(value); break;
-                    case __.ClassID : _ClassID = Convert.ToInt32(value); break;
-                    case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Sex : _Sex = (SexKind)Convert.ToInt32(value); break;
-                    case __.Age : _Age = Convert.ToInt32(value); break;
-                    case __.Mobile : _Mobile = Convert.ToString(value); break;
-                    case __.Address : _Address = Convert.ToString(value); break;
+                    case __.Id : _Id = Convert.ToInt32(value); break;
+                    case __.BuyerId : _BuyerId = Convert.ToInt32(value); break;
+                    case __.PubTime : _PubTime = Convert.ToString(value); break;
+                    case __.Price : _Price = Convert.ToString(value); break;
+                    case __.BuyNumber : _BuyNumber = Convert.ToInt32(value); break;
+                    case __.StartTime : _StartTime = Convert.ToDateTime(value); break;
+                    case __.EndTime : _EndTime = Convert.ToDateTime(value); break;
+                    case __.State : _State = Convert.ToInt32(value); break;
                     case __.CreateUserID : _CreateUserID = Convert.ToInt32(value); break;
                     case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.UpdateUserID : _UpdateUserID = Convert.ToInt32(value); break;
                     case __.UpdateTime : _UpdateTime = Convert.ToDateTime(value); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
-                    case __.Remark : _Remark = Convert.ToString(value); break;
                     default: base[name] = value; break;
                 }
             }
@@ -181,29 +181,32 @@ namespace NewLife.School.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得学生字段信息的快捷方式</summary>
+        /// <summary>取得屠宰场收购信息字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
-            public static readonly Field ID = FindByName(__.ID);
+            public static readonly Field Id = FindByName(__.Id);
 
-            /// <summary>班级</summary>
-            public static readonly Field ClassID = FindByName(__.ClassID);
+            /// <summary>屠宰场</summary>
+            public static readonly Field BuyerId = FindByName(__.BuyerId);
 
-            /// <summary>名称</summary>
-            public static readonly Field Name = FindByName(__.Name);
+            /// <summary>信息发布时间</summary>
+            public static readonly Field PubTime = FindByName(__.PubTime);
 
-            /// <summary>性别</summary>
-            public static readonly Field Sex = FindByName(__.Sex);
+            /// <summary>单价</summary>
+            public static readonly Field Price = FindByName(__.Price);
 
-            /// <summary>年龄</summary>
-            public static readonly Field Age = FindByName(__.Age);
+            /// <summary>购买数量</summary>
+            public static readonly Field BuyNumber = FindByName(__.BuyNumber);
 
-            /// <summary>手机</summary>
-            public static readonly Field Mobile = FindByName(__.Mobile);
+            /// <summary>开始时间</summary>
+            public static readonly Field StartTime = FindByName(__.StartTime);
 
-            /// <summary>地址</summary>
-            public static readonly Field Address = FindByName(__.Address);
+            /// <summary>结束时间</summary>
+            public static readonly Field EndTime = FindByName(__.EndTime);
+
+            /// <summary>状态</summary>
+            public static readonly Field State = FindByName(__.State);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -223,35 +226,35 @@ namespace NewLife.School.Entity
             /// <summary>更新地址</summary>
             public static readonly Field UpdateIP = FindByName(__.UpdateIP);
 
-            /// <summary>备注</summary>
-            public static readonly Field Remark = FindByName(__.Remark);
-
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
 
-        /// <summary>取得学生字段名称的快捷方式</summary>
+        /// <summary>取得屠宰场收购信息字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
-            public const String ID = "ID";
+            public const String Id = "Id";
 
-            /// <summary>班级</summary>
-            public const String ClassID = "ClassID";
+            /// <summary>屠宰场</summary>
+            public const String BuyerId = "BuyerId";
 
-            /// <summary>名称</summary>
-            public const String Name = "Name";
+            /// <summary>信息发布时间</summary>
+            public const String PubTime = "PubTime";
 
-            /// <summary>性别</summary>
-            public const String Sex = "Sex";
+            /// <summary>单价</summary>
+            public const String Price = "Price";
 
-            /// <summary>年龄</summary>
-            public const String Age = "Age";
+            /// <summary>购买数量</summary>
+            public const String BuyNumber = "BuyNumber";
 
-            /// <summary>手机</summary>
-            public const String Mobile = "Mobile";
+            /// <summary>开始时间</summary>
+            public const String StartTime = "StartTime";
 
-            /// <summary>地址</summary>
-            public const String Address = "Address";
+            /// <summary>结束时间</summary>
+            public const String EndTime = "EndTime";
+
+            /// <summary>状态</summary>
+            public const String State = "State";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -270,37 +273,37 @@ namespace NewLife.School.Entity
 
             /// <summary>更新地址</summary>
             public const String UpdateIP = "UpdateIP";
-
-            /// <summary>备注</summary>
-            public const String Remark = "Remark";
         }
         #endregion
     }
 
-    /// <summary>学生接口</summary>
-    public partial interface IStudent
+    /// <summary>屠宰场收购信息接口</summary>
+    public partial interface IBuyInfo
     {
         #region 属性
         /// <summary>编号</summary>
-        Int32 ID { get; set; }
+        Int32 Id { get; set; }
 
-        /// <summary>班级</summary>
-        Int32 ClassID { get; set; }
+        /// <summary>屠宰场</summary>
+        Int32 BuyerId { get; set; }
 
-        /// <summary>名称</summary>
-        String Name { get; set; }
+        /// <summary>信息发布时间</summary>
+        String PubTime { get; set; }
 
-        /// <summary>性别</summary>
-        SexKind Sex { get; set; }
+        /// <summary>单价</summary>
+        String Price { get; set; }
 
-        /// <summary>年龄</summary>
-        Int32 Age { get; set; }
+        /// <summary>购买数量</summary>
+        Int32 BuyNumber { get; set; }
 
-        /// <summary>手机</summary>
-        String Mobile { get; set; }
+        /// <summary>开始时间</summary>
+        DateTime StartTime { get; set; }
 
-        /// <summary>地址</summary>
-        String Address { get; set; }
+        /// <summary>结束时间</summary>
+        DateTime EndTime { get; set; }
+
+        /// <summary>状态</summary>
+        Int32 State { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }
@@ -319,9 +322,6 @@ namespace NewLife.School.Entity
 
         /// <summary>更新地址</summary>
         String UpdateIP { get; set; }
-
-        /// <summary>备注</summary>
-        String Remark { get; set; }
         #endregion
 
         #region 获取/设置 字段值

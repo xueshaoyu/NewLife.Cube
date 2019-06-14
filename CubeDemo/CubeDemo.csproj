@@ -202,6 +202,10 @@
       <Project>{7ac0e99b-cfd8-4b59-8838-503eaa30523f}</Project>
       <Name>NewLife.Cube</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pig.Repository\Pig.Repository.csproj">
+      <Project>{d703fcaf-88fb-472d-aca7-97052831bbec}</Project>
+      <Name>Pig.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using NewLife.Common;
 #if __CORE__
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -601,17 +602,11 @@ namespace NewLife.Cube
             return user.Avatar;
         }
 
-        private static Boolean? _IsDevelop;
         /// <summary>当前是否开发环境。判断csproj文件</summary>
         /// <returns></returns>
         public static Boolean IsDevelop()
         {
-            if (_IsDevelop != null) return _IsDevelop.Value;
-
-            var fis = ".".AsDirectory().GetFiles("*.csproj", SearchOption.TopDirectoryOnly);
-            _IsDevelop = fis != null && fis.Length > 0;
-
-            return _IsDevelop.Value;
+            return SysConfig.Current.Develop;
         }
 
         private static Dictionary<String, String> _logo_cache = new Dictionary<String, String>(StringComparer.OrdinalIgnoreCase);
