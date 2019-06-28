@@ -6,10 +6,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NewLife.Cube;
-using NewLife.School.Entity;
 using NewLife.Web;
 using Pig.Repository.Entity;
-using WebTest.Areas.School;
 using XCode.Membership;
 
 namespace WebTest.Areas.Weixin.Controllers
