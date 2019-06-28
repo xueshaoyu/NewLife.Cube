@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CubeDemoNC", "CubeDemoNC\Cu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pig.Repository", "Pig.Repository\Pig.Repository.csproj", "{D703FCAF-88FB-472D-ACA7-97052831BBEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pig.Weixin", "Pig.Weixin\Pig.Weixin.csproj", "{7AA63570-D3E3-41A0-B81B-88EBACDB61AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pig.Weixin", "Pig.Weixin\Pig.Weixin.csproj", "{7AA63570-D3E3-41A0-B81B-88EBACDB61AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeApi", "CubeApi\CubeApi.csproj", "{3499CA29-BB1E-4CB5-90B1-39FC5B82B79C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{7AA63570-D3E3-41A0-B81B-88EBACDB61AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA63570-D3E3-41A0-B81B-88EBACDB61AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA63570-D3E3-41A0-B81B-88EBACDB61AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3499CA29-BB1E-4CB5-90B1-39FC5B82B79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3499CA29-BB1E-4CB5-90B1-39FC5B82B79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3499CA29-BB1E-4CB5-90B1-39FC5B82B79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3499CA29-BB1E-4CB5-90B1-39FC5B82B79C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
