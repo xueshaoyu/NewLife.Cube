@@ -670,7 +670,12 @@ namespace NewLife.Cube
             if (!SysConfig.Current.Develop) throw new InvalidOperationException("仅支持开发模式下使用！");
 
             // 视图路径，Areas/区域/Views/控制器/_List_Data.cshtml
-            var vpath = "Areas/{0}/Views/{1}/_List_Data.cshtml".F(RouteData.DataTokens["area"], GetType().Name.TrimEnd("Controller"));
+#if !__CORE__
+    var vpath = "Areas/{0}/Views/{1}/_List_Data.cshtml".F(RouteData.DataTokens["area"], GetType().Name.TrimEnd("Controller"));
+#else
+   var vpath = "Areas/{0}/Views/{1}/_List_Data.cshtml".F(RouteData.Values["area"], GetType().Name.TrimEnd("Controller"));
+
+#endif
 
             var rs = ViewHelper.MakeListView(typeof(TEntity), vpath, ListFields);
 
@@ -690,8 +695,13 @@ namespace NewLife.Cube
             if (!SysConfig.Current.Develop) throw new InvalidOperationException("仅支持开发模式下使用！");
 
             // 视图路径，Areas/区域/Views/控制器/_Form_Body.cshtml
-            var vpath = "Areas/{0}/Views/{1}/_Form_Body.cshtml".F(RouteData.DataTokens["area"], GetType().Name.TrimEnd("Controller"));
+            //    var vpath = "Areas/{0}/Views/{1}/_Form_Body.cshtml".F(RouteData.DataTokens["area"], GetType().Name.TrimEnd("Controller"));
+#if !__CORE__
+    var vpath = "Areas/{0}/Views/{1}/_Form_Body.cshtml".F(RouteData.DataTokens["area"], GetType().Name.TrimEnd("Controller"));
+#else
+            var vpath = "Areas/{0}/Views/{1}/_Form_Body.cshtml".F(RouteData.Values["area"], GetType().Name.TrimEnd("Controller"));
 
+#endif
             var rs = ViewHelper.MakeFormView(typeof(TEntity), vpath, FormFields);
 
 #if !__CORE__
@@ -700,9 +710,9 @@ namespace NewLife.Cube
 
             return RedirectToAction("Index");
         }
-        #endregion
+#endregion
 
-        #region 实体操作重载
+#region 实体操作重载
         /// <summary>验证实体对象</summary>
         /// <param name="entity">实体对象</param>
         /// <param name="type">操作类型</param>
@@ -730,9 +740,9 @@ namespace NewLife.Cube
         /// <param name="post">是否提交数据阶段</param>
         /// <returns></returns>
         protected virtual Boolean ValidPermission(TEntity entity, DataObjectMethodType type, Boolean post) => true;
-        #endregion
+#endregion
 
-        #region 列表字段和表单字段
+#region 列表字段和表单字段
         private static FieldCollection _ListFields;
         /// <summary>列表字段过滤</summary>
         protected static FieldCollection ListFields { get => _ListFields ?? (_ListFields = new FieldCollection(Factory).SetRelation(false)); set => _ListFields = value; }
@@ -745,9 +755,9 @@ namespace NewLife.Cube
         /// <param name="isForm">是否是表单</param>
         /// <returns></returns>
         protected virtual IList<FieldItem> GetFields(Boolean isForm) => (isForm ? FormFields : ListFields) ?? Entity<TEntity>.Meta.Fields.ToList();
-        #endregion
+#endregion
 
-        #region 权限菜单
+#region 权限菜单
         /// <summary>菜单顺序。扫描是会反射读取</summary>
         protected static Int32 MenuOrder { get; set; }
 
@@ -775,9 +785,9 @@ namespace NewLife.Cube
 
             return dic;
         }
-        #endregion
+#endregion
 
-        #region 辅助
+#region 辅助
         /// <summary>是否Json请求</summary>
         protected virtual Boolean IsJsonRequest
         {
@@ -823,6 +833,6 @@ namespace NewLife.Cube
             }
         }
 #endif
-        #endregion
+#endregion
     }
 }

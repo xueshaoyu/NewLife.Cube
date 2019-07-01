@@ -1,0 +1,118 @@
+﻿@model Pig.Repository.Entity.BuyInfo
+@using NewLife;
+@using NewLife.Cube
+@using Pig.Repository.Entity
+@using XCode;
+@using XCode.Configuration;
+@using XCode.Membership
+@{
+    var entity = Model;
+    var fields = ViewBag.Fields as IList<FieldItem>;
+    var isNew = (entity as IEntity).IsNullKey;
+}
+<link href="~/Content/webupload/webuploader.css" rel="stylesheet" />
+<link href="~/Content/webupload/mywebuploader.css" rel="stylesheet" />
+<script src="~/Content/webupload/webuploader.js"></script>
+<script src="~/Content/webupload/mywebuploader.js"></script>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">图片</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <div id="uploader" class="uploaderPic"> </div>
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">屠宰场</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        @Html.ForDropDownList("BuyerId", BuyInfo.Meta.AllFields.First(e => e.Name == "BuyerName").Map.Provider.GetDataSource(), @entity.BuyerId)
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">信息发布时间</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <input class="form-control" id="PubTime" name="PubTime" type="text" value="@entity.PubTime" />
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">单价</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <input class="form-control" id="Price" name="Price" type="text" value="@entity.Price" />
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">购买数量</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        @Html.TextBox("BuyNumber", @entity.BuyNumber, new { @class = "form-control", role = "number" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">开始时间</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        @Html.TextBox("StartTime", @entity.StartTime.ToFullString(""), new { @class = "form-control date form_datetime" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">结束时间</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        @Html.TextBox("EndTime", @entity.EndTime.ToFullString(""), new { @class = "form-control date form_datetime" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">状态</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        @Html.TextBox("State", @entity.State, new { @class = "form-control", role = "number" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">创建者</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        @Html.TextBox("CreateUserID", @entity.CreateUserID, new { @class = "form-control", role = "number" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">创建时间</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        @Html.TextBox("CreateTime", @entity.CreateTime.ToFullString(""), new { @class = "form-control date form_datetime" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">创建地址</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <input class="form-control" id="CreateIP" name="CreateIP" type="text" value="@entity.CreateIP" />
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">更新者</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        @Html.TextBox("UpdateUserID", @entity.UpdateUserID, new { @class = "form-control", role = "number" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">更新时间</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        @Html.TextBox("UpdateTime", @entity.UpdateTime.ToFullString(""), new { @class = "form-control date form_datetime" })
+    </div>
+</div>
+<div class="form-group col-xs-12 col-sm-6 col-lg-4">
+    <label class="control-label col-xs-3 col-sm-3">更新地址</label>
+    <div class="input-group col-xs-9 col-sm-9">
+        <input class="form-control" id="UpdateIP" name="UpdateIP" type="text" value="@entity.UpdateIP" />
+    </div>
+</div>
+@Html.Partial("_Form_Footer", entity)
+@if (this.Has(PermissionFlags.Insert, PermissionFlags.Update))
+{
+    <div class="clearfix form-actions col-sm-12 col-md-12">
+        <label class="control-label col-xs-4 col-sm-5 col-md-5"></label>
+        <button type="submit" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-@(isNew ? "plus" : "save")"></i><strong>@(isNew ? "新增" : "保存")</strong></button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="history.go(-1);"><i class="glyphicon glyphicon-remove"></i><strong>取消</strong></button>
+    </div>
+}
+<script>
+    $(function () {
+        $("#uploader").powerWebUpload({ auto: false, server: "/api/Pictures/", deleteServer:"/api/Pictures/" });
+    })
+</script>

@@ -15,11 +15,10 @@
   <ItemGroup>
     <Folder Include="Areas\Pig\Data\" />
     <Folder Include="Areas\Pig\Models\" />
-    <Folder Include="Areas\Pig\Views\" />
     <Folder Include="Areas\Weixin\Data\" />
     <Folder Include="Areas\Weixin\Models\" />
     <Folder Include="Areas\Weixin\Views\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Files\Pictures\" />
   </ItemGroup>
 
   <ItemGroup>

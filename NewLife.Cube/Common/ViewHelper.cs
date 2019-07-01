@@ -427,8 +427,14 @@ namespace NewLife.Cube
             var p = tmp.IndexOf(@"@Html.Partial(""_Form_Footer""");
             sb.Append(tmp.Substring(p));
 
-            File.WriteAllText(vpath.GetFullPath().EnsureDirectory(true), sb.ToString(), Encoding.UTF8);
+#if __CORE__
 
+            File.WriteAllText(vpath.GetCurrentPath().EnsureDirectory(true), sb.ToString(), Encoding.UTF8);
+#else
+            
+
+            File.WriteAllText(vpath.GetFullPath().EnsureDirectory(true), sb.ToString(), Encoding.UTF8);
+#endif
             return true;
         }
 
@@ -639,15 +645,15 @@ namespace NewLife.Cube
     /// <summary>Bootstrap页面控制。允许继承</summary>
     public class Bootstrap
     {
-        #region 属性
+#region 属性
         /// <summary>最大列数</summary>
         public Int32 MaxColumn { get; set; } //= 2;
 
         /// <summary>默认标签宽度</summary>
         public Int32 LabelWidth { get; set; }// = 4;
-        #endregion
+#endregion
 
-        #region 当前项
+#region 当前项
         ///// <summary>当前项</summary>
         //public FieldItem Item { get; set; }
 
@@ -667,18 +673,18 @@ namespace NewLife.Cube
             Type = item.Type;
             Length = item.Length;
         }
-        #endregion
+#endregion
 
-        #region 构造
+#region 构造
         /// <summary>实例化一个页面助手</summary>
         public Bootstrap()
         {
             MaxColumn = 2;
             LabelWidth = 4;
         }
-        #endregion
+#endregion
 
-        #region 方法
+#region 方法
         /// <summary>获取分组宽度</summary>
         /// <returns></returns>
         public virtual Int32 GetGroupWidth()
@@ -690,6 +696,6 @@ namespace NewLife.Cube
 
             return 12;
         }
-        #endregion
+#endregion
     }
 }

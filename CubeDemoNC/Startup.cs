@@ -18,6 +18,11 @@ namespace CubeDemoNC
         {
 
             services.AddCube();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("*").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
