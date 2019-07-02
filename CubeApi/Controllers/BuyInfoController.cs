@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using CubeDemoNC;
+using CubeApi;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using NewLife.Cube;
 using NewLife.Web;
@@ -13,9 +14,7 @@ using XCode.Membership;
 
 namespace WebTest.Areas.Pig.Controllers
 {
-    [PigArea]
-    [DisplayName("养殖户管理")]
-    public class SellerController : WeiXinController<Seller>
+    public class BuyInfoController : ApiBaseController<BuyInfo>
     {
         public override ActionResult Index(Pager p = null)
         {

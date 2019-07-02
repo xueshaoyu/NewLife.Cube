@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/css/weui.min.css">
+    <link rel="stylesheet" href="/css/jquery-weui.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <title></title>
+    <style>
+        .header {
+            text-align: center;
+            padding: 35px 0;
+            background-size: cover;
+            background-color: #eee;
+            background-position: center center;
+        }
+
+        .price_desc {
+            height: 20px;
+            padding-top: 15px;
+        }
+
+            .price_desc span {
+                color: red
+            }
+        .publish-title
+{text-align: center;
+            font-size: 34px;
+            color: #3cc51f;
+            font-weight: 400;
+            margin: 0 15%;}
+    </style>
+</head>
+<body ontouchstart>
+    <div class="weui-tab">
+        <div class="weui-tab__panel weui-tab__bd">
+            <div id="tab4" class="weui-tab__bd-item weui-tab__bd-item--active">
+                <h1 class="publish-title">信息发布</h1>
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cells__title">信息分类</div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input id="category" class="weui-input" type="text" placeholder="请选择信息类别">
+                        </div>
+                    </div>
+                    <div class="weui-cells__title">基本信息</div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="mobile" class="weui-input" type="tel" pattern="[0-9]*" placeholder="请输入联系电话">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">联系人</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="contacts" class="weui-input" type="text" placeholder="请输入联系人">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">价格</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="price" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入单价">
+                        </div>
+                    </div>
+
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">数量</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="count" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入数量">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">地址</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="address" class="weui-input" type="text" placeholder="请输入地址">
+                        </div>
+                    </div>
+                    <div class="weui-cells__title">需求描述</div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <textarea id="introduce" class="weui-textarea" placeholder="请输入需求描述文本" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="weui-btn-area">
+                        <a class="weui-btn weui-btn_primary" href="javascript:" id="btnPublish">发布</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-tabbar">
+            <a href="tzc.html" class="weui-tabbar__item">
+                <!--<span class="weui-badge" style="position: absolute; top: -.4em; right: 1em;">8</span>-->
+                <div class="weui-tabbar__icon">
+                    <img src="/images/knife.png" alt="" class="weui-tabbar__icon">
+                </div>
+                <p class="weui-tabbar__label">屠宰场</p>
+            </a>
+            <a href="ysd.html" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="/images/car.png" alt="" class="weui-tabbar__icon">
+                </div>
+                <p class="weui-tabbar__label">运输</p>
+            </a>
+            <a href="yzh.html" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="/images/pig.png" alt="" class="weui-tabbar__icon">
+                </div>
+                <p class="weui-tabbar__label">养殖户</p>
+            </a>
+            <a href="my.html" class="weui-tabbar__item weui-bar__item--on">
+                <div class="weui-tabbar__icon">
+                    <img src="/images/my.png" alt="" class="weui-tabbar__icon">
+                </div>
+                <p class="weui-tabbar__label">我的</p>
+            </a>
+        </div>
+    </div>
+    <script src="/js/jquery-2.1.4.js"></script>
+    <script src="/js/fastclick.js"></script>
+    <script src="/js/common.js"></script>
+    <script>
+        $(function () {
+            FastClick.attach(document.body);
+
+            //$("tal2").infinite(100);
+            //$("tal3").infinite(100);
+        });
+    </script>
+    <script src="/js/jquery-weui.js"></script>
+    <script>
+
+        var loading = false;
+        $("#category").select({
+            title: "选择信息类别",
+            items: [
+                { title: "买猪", value: 1 },
+                { title: "运输", value: 2 },
+                { title: "卖猪", value: 3 }
+                ]
+        });
+
+        $("#btnPublish").click(function () {
+            var category = $("#category").val();
+            var url = "";
+            var data = {};
+            data.openid = getCookie("openid");
+            data.name = $("name").val();
+            data.price = $("price").val();
+            data.count = $("count").val();
+            data.address = $("address").val();
+            data.introduce = $("introduce").val();
+            data.contacts = $("contacts").val();
+            data.mobile = $("mobile").val();
+            data.title = $("title").val();
+            switch (category) {
+                case 1:
+                    url = "/buyinfo/AddJson";
+                    break;
+                case 2:
+                    url = "/driver/AddJson";
+                    break;
+                case 3:
+                    url = "/SellInfo/AddJson";
+                    break;
+            }
+            $.ajax({
+                type: "post",
+                url: url ,
+                data: data,
+                async: false,
+                success: function(data) {
+                    if (data.result) {
+                        if (data.data.length == 0) {
+                            //没有了
+                        } else {
+                            page = data.pager;
+                        }
+                    } else {
+
+                    }
+                },
+                error: function() {
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>

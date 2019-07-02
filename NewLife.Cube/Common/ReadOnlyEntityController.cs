@@ -153,7 +153,6 @@ namespace NewLife.Cube
         {
             // 缓存数据，用于后续导出
             SetSession(CacheKey, p);
-
             return Entity<TEntity>.Search(p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
 
@@ -324,6 +323,9 @@ namespace NewLife.Cube
                 return JsonError(ex.GetTrue());
             }
         }
+      
+
+
 
         /// <summary>Xml接口</summary>
         /// <param name="id">令牌</param>

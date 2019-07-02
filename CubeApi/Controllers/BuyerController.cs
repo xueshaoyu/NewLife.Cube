@@ -4,28 +4,26 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using CubeDemoNC;
+using CubeApi;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using NewLife.Cube;
 using NewLife.Web;
 using Pig.Repository.Entity;
 using XCode.Membership;
 
 namespace WebTest.Areas.Pig.Controllers
 {
-    [PigArea]
-    [DisplayName("养殖户管理")]
-    public class SellerController : WeiXinController<Seller>
+    public class BuyerController : ApiBaseController<Buyer>
     {
-        public override ActionResult Index(Pager p = null)
-        {
-            return base.Index(p);
-        }
-
+       
         protected override IDictionary<MethodInfo, Int32> ScanActionMenu(IMenu menu)
         {
             menu.Visible = true;
             return base.ScanActionMenu(menu);
+        }
+        public IActionResult Get()
+        {
+            return Json(ReturnHelper.SuccessMsgDataDCountHttpCode("接口已开启"));
         }
     }
 }

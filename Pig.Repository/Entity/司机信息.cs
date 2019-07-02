@@ -24,12 +24,20 @@ namespace Pig.Repository.Entity
         [BindColumn("Id", "编号", "int")]
         public Int32 Id { get { return _Id; } set { if (OnPropertyChanging(__.Id, value)) { _Id = value; OnPropertyChanged(__.Id); } } }
 
+        private Int32 _UserId;
+        /// <summary>用户编号</summary>
+        [DisplayName("用户编号")]
+        [Description("用户编号")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("UserId", "用户编号", "int")]
+        public Int32 UserId { get { return _UserId; } set { if (OnPropertyChanging(__.UserId, value)) { _UserId = value; OnPropertyChanged(__.UserId); } } }
+
         private String _OpenId;
-        /// <summary>关注者OpenId</summary>
-        [DisplayName("关注者OpenId")]
-        [Description("关注者OpenId")]
+        /// <summary>OpenId</summary>
+        [DisplayName("OpenId")]
+        [Description("OpenId")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("OpenId", "关注者OpenId", "nvarchar(50)")]
+        [BindColumn("OpenId", "OpenId", "nvarchar(50)")]
         public String OpenId { get { return _OpenId; } set { if (OnPropertyChanging(__.OpenId, value)) { _OpenId = value; OnPropertyChanged(__.OpenId); } } }
 
         private String _Name;
@@ -140,6 +148,7 @@ namespace Pig.Repository.Entity
                 switch (name)
                 {
                     case __.Id : return _Id;
+                    case __.UserId : return _UserId;
                     case __.OpenId : return _OpenId;
                     case __.Name : return _Name;
                     case __.Introduce : return _Introduce;
@@ -161,6 +170,7 @@ namespace Pig.Repository.Entity
                 switch (name)
                 {
                     case __.Id : _Id = Convert.ToInt32(value); break;
+                    case __.UserId : _UserId = Convert.ToInt32(value); break;
                     case __.OpenId : _OpenId = Convert.ToString(value); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Introduce : _Introduce = Convert.ToString(value); break;
@@ -187,7 +197,10 @@ namespace Pig.Repository.Entity
             /// <summary>编号</summary>
             public static readonly Field Id = FindByName(__.Id);
 
-            /// <summary>关注者OpenId</summary>
+            /// <summary>用户编号</summary>
+            public static readonly Field UserId = FindByName(__.UserId);
+
+            /// <summary>OpenId</summary>
             public static readonly Field OpenId = FindByName(__.OpenId);
 
             /// <summary>名称</summary>
@@ -235,7 +248,10 @@ namespace Pig.Repository.Entity
             /// <summary>编号</summary>
             public const String Id = "Id";
 
-            /// <summary>关注者OpenId</summary>
+            /// <summary>用户编号</summary>
+            public const String UserId = "UserId";
+
+            /// <summary>OpenId</summary>
             public const String OpenId = "OpenId";
 
             /// <summary>名称</summary>
@@ -284,7 +300,10 @@ namespace Pig.Repository.Entity
         /// <summary>编号</summary>
         Int32 Id { get; set; }
 
-        /// <summary>关注者OpenId</summary>
+        /// <summary>用户编号</summary>
+        Int32 UserId { get; set; }
+
+        /// <summary>OpenId</summary>
         String OpenId { get; set; }
 
         /// <summary>名称</summary>

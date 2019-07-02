@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using XCode;
@@ -41,10 +41,10 @@ namespace Pig.Repository.Entity
 
         private Int32 _ParentId;
         /// <summary>父级菜单</summary>
-        [DisplayName("父菜单")]
-        [Description("父菜单")]
+        [DisplayName("父级菜单")]
+        [Description("父级菜单")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("ParentId", "父菜单", "int")]
+        [BindColumn("ParentId", "父级菜单", "int")]
         public Int32 ParentId { get { return _ParentId; } set { if (OnPropertyChanging(__.ParentId, value)) { _ParentId = value; OnPropertyChanged(__.ParentId); } } }
 
         private Int32 _IndexLevel;

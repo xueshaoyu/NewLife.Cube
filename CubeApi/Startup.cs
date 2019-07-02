@@ -38,7 +38,7 @@ namespace CubeApi
             services.AddCors(options =>
                      {
                          options.AddPolicy("AllowSpecificOrigin",
-                                 builder => builder.WithOrigins("http://localhost:3997").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+                                 builder => builder.WithOrigins("*").AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
                      });
         }
 
