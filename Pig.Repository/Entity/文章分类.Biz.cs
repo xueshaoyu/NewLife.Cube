@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -106,18 +106,6 @@ namespace Pig.Repository.Entity
         #endregion
 
         #region 扩展属性
-
-        /// <summary>养殖户</summary>
-        [XmlIgnore]
-        //[ScriptIgnore]
-        public ArtSort Parent { get { return Extends.Get(nameof(ArtSort), k => ArtSort.FindById(ParentId)); } }
-
-        /// <summary>养殖户</summary>
-        [XmlIgnore]
-        //[ScriptIgnore]
-        [DisplayName("父菜单")]
-        [Map(__.ParentId, typeof(ArtSort), "Id")]
-        public String ParentName { get { return Parent?.Name; } }
         #endregion
 
         #region 扩展查询

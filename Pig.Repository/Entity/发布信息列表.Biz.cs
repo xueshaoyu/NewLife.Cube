@@ -23,15 +23,15 @@ using XCode.Membership;
 
 namespace Pig.Repository.Entity
 {
-    /// <summary>屠宰场收购信息</summary>
-    public partial class BuyInfo : Entity<BuyInfo>
+    /// <summary>发布信息列表</summary>
+    public partial class PublishInfo : Entity<PublishInfo>
     {
         #region 对象操作
-        static BuyInfo()
+        static PublishInfo()
         {
             // 累加字段
             //var df = Meta.Factory.AdditionalFields;
-            //df.Add(__.BuyerId);
+            //df.Add(__.UserId);
 
             // 过滤器 UserModule、TimeModule、IPModule
             Meta.Modules.Add<UserModule>();
@@ -67,17 +67,22 @@ namespace Pig.Repository.Entity
         //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
         //    if (Meta.Session.Count > 0) return;
 
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化BuyInfo[屠宰场收购信息]数据……");
+        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化PublishInfo[发布信息列表]数据……");
 
-        //    var entity = new BuyInfo();
+        //    var entity = new PublishInfo();
         //    entity.Id = 0;
-        //    entity.BuyerId = 0;
+        //    entity.Title = "abc";
+        //    entity.UserId = 0;
+        //    entity.OpenId = "abc";
         //    entity.PubTime = "abc";
+        //    entity.Description = "abc";
         //    entity.Price = "abc";
-        //    entity.BuyNumber = 0;
+        //    entity.Role = 0;
+        //    entity.Number = 0;
         //    entity.StartTime = DateTime.Now;
         //    entity.EndTime = DateTime.Now;
         //    entity.State = 0;
+        //    entity.Publish = 0;
         //    entity.CreateUserID = 0;
         //    entity.CreateTime = DateTime.Now;
         //    entity.CreateIP = "abc";
@@ -86,7 +91,7 @@ namespace Pig.Repository.Entity
         //    entity.UpdateIP = "abc";
         //    entity.Insert();
 
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化BuyInfo[屠宰场收购信息]数据！");
+        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化PublishInfo[发布信息列表]数据！");
         //}
 
         ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
@@ -105,24 +110,24 @@ namespace Pig.Repository.Entity
         #endregion
 
         #region 扩展属性
-        /// <summary>屠宰场</summary>
+        /// <summary>用户编号</summary>
         [XmlIgnore]
         //[ScriptIgnore]
-        public Buyer Buyer { get { return Extends.Get(nameof(Buyer), k => Buyer.FindById(BuyerId)); } }
+        public User User { get { return Extends.Get(nameof(User), k => User.FindById(UserId)); } }
 
-        /// <summary>屠宰场</summary>
+        /// <summary>用户编号</summary>
         [XmlIgnore]
         //[ScriptIgnore]
-        [DisplayName("屠宰场")]
-        [Map(__.BuyerId, typeof(Buyer), "Id")]
-        public String BuyerName { get { return Buyer?.Name; } }
+        [DisplayName("用户编号")]
+        [Map(__.UserId, typeof(User), "Id")]
+        public String UserName { get { return User?.Name; } }
         #endregion
 
         #region 扩展查询
         /// <summary>根据编号查找</summary>
         /// <param name="id">编号</param>
         /// <returns>实体对象</returns>
-        public static BuyInfo FindById(Int32 id)
+        public static PublishInfo FindById(Int32 id)
         {
             if (id <= 0) return null;
 
@@ -138,7 +143,7 @@ namespace Pig.Repository.Entity
         /// <summary>根据信息发布时间查找</summary>
         /// <param name="pubtime">信息发布时间</param>
         /// <returns>实体列表</returns>
-        public static IList<BuyInfo> FindAllByPubTime(String pubtime)
+        public static IList<PublishInfo> FindAllByPubTime(String pubtime)
         {
             // 实体缓存
             if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.PubTime == pubtime);

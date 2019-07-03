@@ -1,37 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Tables Version="9.9.6940.24706" Output="Entity" NameSpace="Pig.Repository.Entity" ConnName="Pig" BaseClass="Entity">
-  <Table Name="Buyer" Description="买家" DbType="SqlServer">
+  <Table Name="PublishInfo" Description="发布信息列表" DbType="SqlServer">
     <Columns>
       <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Title" DataType="String" Master="True" Description="标题" />
       <Column Name="UserId" DataType="Int32" Description="用户编号" />
-      <Column Name="OpenId" DataType="String" Description="OpenId" />
-      <Column Name="Name" DataType="String" Master="True" Description="名称" />
-      <Column Name="Introduce" DataType="String" Length="500" Description="屠宰场介绍" />
-      <Column Name="MiniImg" DataType="String" Description="缩略图" />
-      <Column Name="Mobile" DataType="String" Description="手机" />
-      <Column Name="Contacts" DataType="String" Description="联系人" />
-      <Column Name="Address" DataType="String" Description="地址" />
-      <Column Name="State" DataType="Int32" Description="状态" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-    </Columns>
-    <Indexes>
-      <Index Columns="Name" />
-    </Indexes>
-  </Table>
-  <Table Name="BuyInfo" Description="屠宰场收购信息" DbType="SqlServer">
-    <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-        <Column Name="Title" DataType="String" Description="标题" />
-      <Column Name="BuyerId" DataType="Int32" Description="屠宰场" />
-      <Column Name="PubTime" DataType="String" Master="True" Description="信息发布时间" />
-        <Column Name="Description" DataType="String" Length="500" Description="收购需求描述" />
+      <Column Name="OpenId" DataType="String" Description="关注者OpenId" />
+      <Column Name="PubTime" DataType="String" Description="信息发布时间" />
+      <Column Name="Description" DataType="String" Length="500" Description="收购需求描述" />
       <Column Name="Price" DataType="String" Description="单价" />
-      <Column Name="BuyNumber" DataType="Int32" Description="购买数量" />
+      <Column Name="Role" DataType="Int32" Description="信息分类，屠宰场、运输、养殖户、" />
+      <Column Name="Number" DataType="Int32" Description="购买数量" />
       <Column Name="StartTime" DataType="DateTime" Description="开始时间" />
       <Column Name="EndTime" DataType="DateTime" Description="结束时间" />
       <Column Name="State" DataType="Int32" Description="状态" />
@@ -45,75 +24,6 @@
     </Columns>
     <Indexes>
       <Index Columns="PubTime" />
-    </Indexes>
-  </Table>
-  <Table Name="Seller" Description="卖家" DbType="SqlServer">
-    <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="UserId" DataType="Int32" Description="用户编号" />
-      <Column Name="OpenId" DataType="String" Description="OpenId" />
-      <Column Name="Name" DataType="String" Master="True" Description="名称" />
-      <Column Name="Introduce" DataType="String" Length="500" Description="养殖户介绍" />
-      <Column Name="MiniImg" DataType="String" Description="缩略图" />
-      <Column Name="Mobile" DataType="String" Description="手机" />
-      <Column Name="Contacts" DataType="String" Description="联系人" />
-      <Column Name="Address" DataType="String" Description="地址" />
-      <Column Name="State" DataType="Int32" Description="状态" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-    </Columns>
-    <Indexes>
-      <Index Columns="Name" />
-    </Indexes>
-  </Table>
-  <Table Name="SellInfo" Description="出售信息" DbType="SqlServer">
-    <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-        <Column Name="Title" DataType="String" Description="标题" />
-      <Column Name="SellerId" DataType="Int32" Description="养殖户" />
-      <Column Name="PubTime" DataType="String" Description="信息发布时间" />
-      <Column Name="SellNumber" DataType="Int32" Description="出售数量" />
-      <Column Name="Description" DataType="String" Length="500" Description="出售需求描述" />
-      <Column Name="MinPrice" DataType="String" Description="能接受的最低单价" />
-      <Column Name="StartTime" DataType="DateTime" Description="开始时间" />
-      <Column Name="EndTime" DataType="DateTime" Description="结束时间" />
-      <Column Name="State" DataType="Int32" Description="状态" />
-        <Column Name="Publish" DataType="Int32" Description="发布" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-    </Columns>
-    <Indexes>
-      <Index Columns="PubTime" />
-    </Indexes>
-  </Table>
-  <Table Name="Driver" Description="司机信息" DbType="SqlServer">
-    <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="UserId" DataType="Int32" Description="用户编号" />
-      <Column Name="OpenId" DataType="String" Description="OpenId" />
-      <Column Name="Name" DataType="String" Master="True" Description="名称" />
-      <Column Name="Introduce" DataType="String" Length="500" Description="司机介绍" />
-      <Column Name="Mobile" DataType="String" Description="手机" />
-      <Column Name="Contacts" DataType="String" Description="联系人" />
-      <Column Name="Address" DataType="String" Description="地址" />
-      <Column Name="State" DataType="Int32" Description="状态" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-    </Columns>
-    <Indexes>
-      <Index Columns="Name" />
     </Indexes>
   </Table>
   <Table Name="UserGroup" Description="关注分组表" DbType="SqlServer">
@@ -132,10 +42,19 @@
   <Table Name="User" Description="关注用户信息" DbType="SqlServer">
     <Columns>
       <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="OpenId" DataType="String" Master="True" Description="关注者OpenId" />
+      <Column Name="OpenId" DataType="String" Description="关注者OpenId" />
       <Column Name="NickName" DataType="String" Description="昵称" />
       <Column Name="GroupId" DataType="Int32" Description="分组编号" />
+      <Column Name="Role" DataType="Int32" Description="用户角色，屠宰场、运输、养殖户、" />
       <Column Name="IsFollow" DataType="Int32" Description="是否关注" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Introduce" DataType="String" Length="500" Description="简介" />
+      <Column Name="MiniImg" DataType="String" Description="缩略图" />
+      <Column Name="Mobile" DataType="String" Description="手机" />
+      <Column Name="Contacts" DataType="String" Description="联系人" />
+      <Column Name="Address" DataType="String" Description="地址" />
+      <Column Name="State" DataType="Int32" Description="状态" />
+      <Column Name="Password" DataType="String" Description="密码" />
       <Column Name="FirstSubTime" DataType="DateTime" Description="首次关注时间" />
       <Column Name="LastSubTime" DataType="DateTime" Description="最近关注时间" />
       <Column Name="UnSubTime" DataType="DateTime" Description="最近取注时间" />
@@ -150,7 +69,7 @@
   <Table Name="UserData" Description="用户资料" DbType="SqlServer">
     <Columns>
       <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="UserId" DataType="Int32" Master="True" Description="用户编号" />
+      <Column Name="UserId" DataType="Int32" Description="用户编号" />
       <Column Name="Sex" DataType="Int32" Description="性别" />
       <Column Name="City" DataType="String" Description="城市" />
       <Column Name="Country" DataType="String" Description="国家" />

@@ -15,6 +15,7 @@ using XCode.Configuration;
 using XCode.Membership;
 using NewLife.IO;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using System.IO.Compression;
 using XCode.DataAccessLayer;
@@ -313,14 +314,15 @@ namespace NewLife.Cube
                 // 需要总记录数来分页
                 p.RetrieveTotalCount = true;
 
-                var list = Search(p);
-
+                var list = Search(p); 
                 // Json输出
-                return JsonOK(list, new { pager = p });
+                return Json(ReturnHelper.SuccessMsgDataDCountHttpCode("success",new{
+                    list=list,pager=p
+                }));
             }
             catch (Exception ex)
             {
-                return JsonError(ex.GetTrue());
+                return Json(ReturnHelper.ErrorMsgEcodeElevelHttpCode("error"));
             }
         }
       

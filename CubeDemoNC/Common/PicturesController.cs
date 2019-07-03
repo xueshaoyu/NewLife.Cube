@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using NewLife.Cube;
 
 namespace CubeApi.Controllers
 {

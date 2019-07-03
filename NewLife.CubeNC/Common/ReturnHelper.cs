@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CubeApi
+namespace NewLife.Cube
 {
     public abstract class ReturnHelper
     {

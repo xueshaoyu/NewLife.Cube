@@ -177,6 +177,7 @@
     <Compile Include="Common\EntityModelBinder.cs" />
     <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Common\PagerModelBinder.cs" />
+    <Compile Include="Common\ReturnHelper.cs" />
     <Compile Include="Membership\ManageProvider.cs" />
   </ItemGroup>
   <ItemGroup>

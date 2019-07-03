@@ -63,7 +63,16 @@ namespace Pig.Repository.Entity
         //    entity.OpenId = "abc";
         //    entity.NickName = "abc";
         //    entity.GroupId = 0;
+        //    entity.Role = 0;
         //    entity.IsFollow = 0;
+        //    entity.Name = "abc";
+        //    entity.Introduce = "abc";
+        //    entity.MiniImg = "abc";
+        //    entity.Mobile = "abc";
+        //    entity.Contacts = "abc";
+        //    entity.Address = "abc";
+        //    entity.State = 0;
+        //    entity.Password = "abc";
         //    entity.FirstSubTime = DateTime.Now;
         //    entity.LastSubTime = DateTime.Now;
         //    entity.UnSubTime = DateTime.Now;

@@ -101,7 +101,7 @@ namespace Pig.Repository.Entity
         //[ScriptIgnore]
         [DisplayName("用户编号")]
         [Map(__.UserId, typeof(User), "Id")]
-        public String UserOpenId { get { return User?.OpenId; } }
+        public String UserName { get { return User?.Name; } }
         #endregion
 
         #region 扩展查询

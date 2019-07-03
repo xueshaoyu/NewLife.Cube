@@ -16,8 +16,8 @@ using XCode.Membership;
 namespace WebTest.Areas.Pig.Controllers
 {
     [PigArea]
-    [DisplayName("屠宰场管理")]
-    public class BuyerController : WeiXinController<Buyer>
+    [DisplayName("用户管理")]
+    public class UserController : WeiXinController<User>
     {
         public override ActionResult Index(Pager p = null)
         {
@@ -29,7 +29,15 @@ namespace WebTest.Areas.Pig.Controllers
             menu.Visible = true;
             return base.ScanActionMenu(menu);
         }
-        public override ActionResult AddJson(String openId, Buyer entity)
+
+        public ActionResult FindByOpenId(string openId)
+        {
+            var user = FindCurrentUser(openId);
+            if(user!=null)
+            return Json(ReturnHelper.SuccessMsgDataDCountHttpCode("Success", user));
+            return Json(ReturnHelper.ErrorMsgEcodeElevelHttpCode("User is not exitst"));
+        }
+        public override ActionResult AddJson(String openId, User entity)
         {
             if (openId.IsNullOrEmpty())
             {
@@ -38,15 +46,16 @@ namespace WebTest.Areas.Pig.Controllers
             var user = FindCurrentUser(openId);
             if (user == null)
             {
-                user = CreateUser(openId);
+                entity.Insert();
             }
-            entity.OpenId = openId;
-            entity.UserId = user.Id;
-            entity.CreateUserID = user.Id;
-            entity.UpdateUserID = user.Id;
-            entity.CreateTime = DateTime.Now;
-            entity.UpdateTime = DateTime.Now;
-            return base.AddJson(openId, entity);
+            else
+            {
+                entity.Id = user.Id;
+                entity.UpdateTime = DateTime.Now;
+                entity.Update();
+            }
+
+            return Json(ReturnHelper.SuccessMsgDataDCountHttpCode("Success"));
         }
     }
 }

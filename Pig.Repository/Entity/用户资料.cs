@@ -28,7 +28,7 @@ namespace Pig.Repository.Entity
         [DisplayName("用户编号")]
         [Description("用户编号")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("UserId", "用户编号", "int", Master = true)]
+        [BindColumn("UserId", "用户编号", "int")]
         public Int32 UserId { get { return _UserId; } set { if (OnPropertyChanging(__.UserId, value)) { _UserId = value; OnPropertyChanged(__.UserId); } } }
 
         private Int32 _Sex;

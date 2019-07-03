@@ -7,13 +7,13 @@ using XCode.DataAccessLayer;
 
 namespace Pig.Repository.Entity
 {
-    /// <summary>司机信息</summary>
+    /// <summary>发布信息列表</summary>
     [Serializable]
     [DataObject]
-    [Description("司机信息")]
-    [BindIndex("IX_Driver_Name", false, "Name")]
-    [BindTable("Driver", Description = "司机信息", ConnName = "Pig", DbType = DatabaseType.SqlServer)]
-    public partial class Driver : IDriver
+    [Description("发布信息列表")]
+    [BindIndex("IX_PublishInfo_PubTime", false, "PubTime")]
+    [BindTable("PublishInfo", Description = "发布信息列表", ConnName = "Pig", DbType = DatabaseType.SqlServer)]
+    public partial class PublishInfo : IPublishInfo
     {
         #region 属性
         private Int32 _Id;
@@ -24,6 +24,14 @@ namespace Pig.Repository.Entity
         [BindColumn("Id", "编号", "int")]
         public Int32 Id { get { return _Id; } set { if (OnPropertyChanging(__.Id, value)) { _Id = value; OnPropertyChanged(__.Id); } } }
 
+        private String _Title;
+        /// <summary>标题</summary>
+        [DisplayName("标题")]
+        [Description("标题")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Title", "标题", "nvarchar(50)", Master = true)]
+        public String Title { get { return _Title; } set { if (OnPropertyChanging(__.Title, value)) { _Title = value; OnPropertyChanged(__.Title); } } }
+
         private Int32 _UserId;
         /// <summary>用户编号</summary>
         [DisplayName("用户编号")]
@@ -33,52 +41,68 @@ namespace Pig.Repository.Entity
         public Int32 UserId { get { return _UserId; } set { if (OnPropertyChanging(__.UserId, value)) { _UserId = value; OnPropertyChanged(__.UserId); } } }
 
         private String _OpenId;
-        /// <summary>OpenId</summary>
-        [DisplayName("OpenId")]
-        [Description("OpenId")]
+        /// <summary>关注者OpenId</summary>
+        [DisplayName("关注者OpenId")]
+        [Description("关注者OpenId")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("OpenId", "OpenId", "nvarchar(50)")]
+        [BindColumn("OpenId", "关注者OpenId", "nvarchar(50)")]
         public String OpenId { get { return _OpenId; } set { if (OnPropertyChanging(__.OpenId, value)) { _OpenId = value; OnPropertyChanged(__.OpenId); } } }
 
-        private String _Name;
-        /// <summary>名称</summary>
-        [DisplayName("名称")]
-        [Description("名称")]
+        private String _PubTime;
+        /// <summary>信息发布时间</summary>
+        [DisplayName("信息发布时间")]
+        [Description("信息发布时间")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称", "nvarchar(50)", Master = true)]
-        public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
+        [BindColumn("PubTime", "信息发布时间", "nvarchar(50)")]
+        public String PubTime { get { return _PubTime; } set { if (OnPropertyChanging(__.PubTime, value)) { _PubTime = value; OnPropertyChanged(__.PubTime); } } }
 
-        private String _Introduce;
-        /// <summary>司机介绍</summary>
-        [DisplayName("司机介绍")]
-        [Description("司机介绍")]
+        private String _Description;
+        /// <summary>收购需求描述</summary>
+        [DisplayName("收购需求描述")]
+        [Description("收购需求描述")]
         [DataObjectField(false, false, true, 500)]
-        [BindColumn("Introduce", "司机介绍", "nvarchar(500)")]
-        public String Introduce { get { return _Introduce; } set { if (OnPropertyChanging(__.Introduce, value)) { _Introduce = value; OnPropertyChanged(__.Introduce); } } }
+        [BindColumn("Description", "收购需求描述", "nvarchar(500)")]
+        public String Description { get { return _Description; } set { if (OnPropertyChanging(__.Description, value)) { _Description = value; OnPropertyChanged(__.Description); } } }
 
-        private String _Mobile;
-        /// <summary>手机</summary>
-        [DisplayName("手机")]
-        [Description("手机")]
+        private String _Price;
+        /// <summary>单价</summary>
+        [DisplayName("单价")]
+        [Description("单价")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Mobile", "手机", "nvarchar(50)")]
-        public String Mobile { get { return _Mobile; } set { if (OnPropertyChanging(__.Mobile, value)) { _Mobile = value; OnPropertyChanged(__.Mobile); } } }
+        [BindColumn("Price", "单价", "nvarchar(50)")]
+        public String Price { get { return _Price; } set { if (OnPropertyChanging(__.Price, value)) { _Price = value; OnPropertyChanged(__.Price); } } }
 
-        private String _Contacts;
-        /// <summary>联系人</summary>
-        [DisplayName("联系人")]
-        [Description("联系人")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Contacts", "联系人", "nvarchar(50)")]
-        public String Contacts { get { return _Contacts; } set { if (OnPropertyChanging(__.Contacts, value)) { _Contacts = value; OnPropertyChanged(__.Contacts); } } }
+        private Int32 _Role;
+        /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
+        [DisplayName("信息分类")]
+        [Description("信息分类，屠宰场、运输、养殖户、")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Role", "信息分类，屠宰场、运输、养殖户、", "int")]
+        public Int32 Role { get { return _Role; } set { if (OnPropertyChanging(__.Role, value)) { _Role = value; OnPropertyChanged(__.Role); } } }
 
-        private String _Address;
-        /// <summary>地址</summary>
-        [DisplayName("地址")]
-        [Description("地址")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Address", "地址", "nvarchar(50)")]
-        public String Address { get { return _Address; } set { if (OnPropertyChanging(__.Address, value)) { _Address = value; OnPropertyChanged(__.Address); } } }
+        private Int32 _Number;
+        /// <summary>购买数量</summary>
+        [DisplayName("购买数量")]
+        [Description("购买数量")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Number", "购买数量", "int")]
+        public Int32 Number { get { return _Number; } set { if (OnPropertyChanging(__.Number, value)) { _Number = value; OnPropertyChanged(__.Number); } } }
+
+        private DateTime _StartTime;
+        /// <summary>开始时间</summary>
+        [DisplayName("开始时间")]
+        [Description("开始时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("StartTime", "开始时间", "datetime")]
+        public DateTime StartTime { get { return _StartTime; } set { if (OnPropertyChanging(__.StartTime, value)) { _StartTime = value; OnPropertyChanged(__.StartTime); } } }
+
+        private DateTime _EndTime;
+        /// <summary>结束时间</summary>
+        [DisplayName("结束时间")]
+        [Description("结束时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("EndTime", "结束时间", "datetime")]
+        public DateTime EndTime { get { return _EndTime; } set { if (OnPropertyChanging(__.EndTime, value)) { _EndTime = value; OnPropertyChanged(__.EndTime); } } }
 
         private Int32 _State;
         /// <summary>状态</summary>
@@ -87,6 +111,14 @@ namespace Pig.Repository.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("State", "状态", "int")]
         public Int32 State { get { return _State; } set { if (OnPropertyChanging(__.State, value)) { _State = value; OnPropertyChanged(__.State); } } }
+
+        private Int32 _Publish;
+        /// <summary>发布</summary>
+        [DisplayName("发布")]
+        [Description("发布")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Publish", "发布", "int")]
+        public Int32 Publish { get { return _Publish; } set { if (OnPropertyChanging(__.Publish, value)) { _Publish = value; OnPropertyChanged(__.Publish); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -148,14 +180,18 @@ namespace Pig.Repository.Entity
                 switch (name)
                 {
                     case __.Id : return _Id;
+                    case __.Title : return _Title;
                     case __.UserId : return _UserId;
                     case __.OpenId : return _OpenId;
-                    case __.Name : return _Name;
-                    case __.Introduce : return _Introduce;
-                    case __.Mobile : return _Mobile;
-                    case __.Contacts : return _Contacts;
-                    case __.Address : return _Address;
+                    case __.PubTime : return _PubTime;
+                    case __.Description : return _Description;
+                    case __.Price : return _Price;
+                    case __.Role : return _Role;
+                    case __.Number : return _Number;
+                    case __.StartTime : return _StartTime;
+                    case __.EndTime : return _EndTime;
                     case __.State : return _State;
+                    case __.Publish : return _Publish;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -170,14 +206,18 @@ namespace Pig.Repository.Entity
                 switch (name)
                 {
                     case __.Id : _Id = Convert.ToInt32(value); break;
+                    case __.Title : _Title = Convert.ToString(value); break;
                     case __.UserId : _UserId = Convert.ToInt32(value); break;
                     case __.OpenId : _OpenId = Convert.ToString(value); break;
-                    case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Introduce : _Introduce = Convert.ToString(value); break;
-                    case __.Mobile : _Mobile = Convert.ToString(value); break;
-                    case __.Contacts : _Contacts = Convert.ToString(value); break;
-                    case __.Address : _Address = Convert.ToString(value); break;
+                    case __.PubTime : _PubTime = Convert.ToString(value); break;
+                    case __.Description : _Description = Convert.ToString(value); break;
+                    case __.Price : _Price = Convert.ToString(value); break;
+                    case __.Role : _Role = Convert.ToInt32(value); break;
+                    case __.Number : _Number = Convert.ToInt32(value); break;
+                    case __.StartTime : _StartTime = Convert.ToDateTime(value); break;
+                    case __.EndTime : _EndTime = Convert.ToDateTime(value); break;
                     case __.State : _State = Convert.ToInt32(value); break;
+                    case __.Publish : _Publish = Convert.ToInt32(value); break;
                     case __.CreateUserID : _CreateUserID = Convert.ToInt32(value); break;
                     case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -191,35 +231,47 @@ namespace Pig.Repository.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得司机信息字段信息的快捷方式</summary>
+        /// <summary>取得发布信息列表字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
             public static readonly Field Id = FindByName(__.Id);
 
+            /// <summary>标题</summary>
+            public static readonly Field Title = FindByName(__.Title);
+
             /// <summary>用户编号</summary>
             public static readonly Field UserId = FindByName(__.UserId);
 
-            /// <summary>OpenId</summary>
+            /// <summary>关注者OpenId</summary>
             public static readonly Field OpenId = FindByName(__.OpenId);
 
-            /// <summary>名称</summary>
-            public static readonly Field Name = FindByName(__.Name);
+            /// <summary>信息发布时间</summary>
+            public static readonly Field PubTime = FindByName(__.PubTime);
 
-            /// <summary>司机介绍</summary>
-            public static readonly Field Introduce = FindByName(__.Introduce);
+            /// <summary>收购需求描述</summary>
+            public static readonly Field Description = FindByName(__.Description);
 
-            /// <summary>手机</summary>
-            public static readonly Field Mobile = FindByName(__.Mobile);
+            /// <summary>单价</summary>
+            public static readonly Field Price = FindByName(__.Price);
 
-            /// <summary>联系人</summary>
-            public static readonly Field Contacts = FindByName(__.Contacts);
+            /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
+            public static readonly Field Role = FindByName(__.Role);
 
-            /// <summary>地址</summary>
-            public static readonly Field Address = FindByName(__.Address);
+            /// <summary>购买数量</summary>
+            public static readonly Field Number = FindByName(__.Number);
+
+            /// <summary>开始时间</summary>
+            public static readonly Field StartTime = FindByName(__.StartTime);
+
+            /// <summary>结束时间</summary>
+            public static readonly Field EndTime = FindByName(__.EndTime);
 
             /// <summary>状态</summary>
             public static readonly Field State = FindByName(__.State);
+
+            /// <summary>发布</summary>
+            public static readonly Field Publish = FindByName(__.Publish);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -242,35 +294,47 @@ namespace Pig.Repository.Entity
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
 
-        /// <summary>取得司机信息字段名称的快捷方式</summary>
+        /// <summary>取得发布信息列表字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
             public const String Id = "Id";
 
+            /// <summary>标题</summary>
+            public const String Title = "Title";
+
             /// <summary>用户编号</summary>
             public const String UserId = "UserId";
 
-            /// <summary>OpenId</summary>
+            /// <summary>关注者OpenId</summary>
             public const String OpenId = "OpenId";
 
-            /// <summary>名称</summary>
-            public const String Name = "Name";
+            /// <summary>信息发布时间</summary>
+            public const String PubTime = "PubTime";
 
-            /// <summary>司机介绍</summary>
-            public const String Introduce = "Introduce";
+            /// <summary>收购需求描述</summary>
+            public const String Description = "Description";
 
-            /// <summary>手机</summary>
-            public const String Mobile = "Mobile";
+            /// <summary>单价</summary>
+            public const String Price = "Price";
 
-            /// <summary>联系人</summary>
-            public const String Contacts = "Contacts";
+            /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
+            public const String Role = "Role";
 
-            /// <summary>地址</summary>
-            public const String Address = "Address";
+            /// <summary>购买数量</summary>
+            public const String Number = "Number";
+
+            /// <summary>开始时间</summary>
+            public const String StartTime = "StartTime";
+
+            /// <summary>结束时间</summary>
+            public const String EndTime = "EndTime";
 
             /// <summary>状态</summary>
             public const String State = "State";
+
+            /// <summary>发布</summary>
+            public const String Publish = "Publish";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -293,36 +357,48 @@ namespace Pig.Repository.Entity
         #endregion
     }
 
-    /// <summary>司机信息接口</summary>
-    public partial interface IDriver
+    /// <summary>发布信息列表接口</summary>
+    public partial interface IPublishInfo
     {
         #region 属性
         /// <summary>编号</summary>
         Int32 Id { get; set; }
 
+        /// <summary>标题</summary>
+        String Title { get; set; }
+
         /// <summary>用户编号</summary>
         Int32 UserId { get; set; }
 
-        /// <summary>OpenId</summary>
+        /// <summary>关注者OpenId</summary>
         String OpenId { get; set; }
 
-        /// <summary>名称</summary>
-        String Name { get; set; }
+        /// <summary>信息发布时间</summary>
+        String PubTime { get; set; }
 
-        /// <summary>司机介绍</summary>
-        String Introduce { get; set; }
+        /// <summary>收购需求描述</summary>
+        String Description { get; set; }
 
-        /// <summary>手机</summary>
-        String Mobile { get; set; }
+        /// <summary>单价</summary>
+        String Price { get; set; }
 
-        /// <summary>联系人</summary>
-        String Contacts { get; set; }
+        /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
+        Int32 Role { get; set; }
 
-        /// <summary>地址</summary>
-        String Address { get; set; }
+        /// <summary>购买数量</summary>
+        Int32 Number { get; set; }
+
+        /// <summary>开始时间</summary>
+        DateTime StartTime { get; set; }
+
+        /// <summary>结束时间</summary>
+        DateTime EndTime { get; set; }
 
         /// <summary>状态</summary>
         Int32 State { get; set; }
+
+        /// <summary>发布</summary>
+        Int32 Publish { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }

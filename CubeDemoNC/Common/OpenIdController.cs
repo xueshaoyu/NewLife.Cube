@@ -8,6 +8,7 @@ using CubeApi;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using NewLife.Cube;
 using Senparc.CO2NET.HttpUtility;
 using Senparc.CO2NET.Utilities;
 using Senparc.Weixin;

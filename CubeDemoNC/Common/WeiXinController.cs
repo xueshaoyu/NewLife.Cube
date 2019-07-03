@@ -53,20 +53,20 @@ namespace CubeDemoNC
         [DisplayName("JsonAdd接口")]
         public virtual ActionResult AddJson(string openId, TEntity entity)
         {
-            try
-            {
+            //try
+            //{
 
-                //   entity[""] = v; 
-                entity.Insert();
+            //    //   entity[""] = v; 
+            //    entity.Insert();
 
-                return JsonOK(entity);
-            }
+            //    return JsonOK(entity);
+            //}
 
-            catch (Exception ex)
-            {
-                return JsonError(ex.GetTrue());
-            }
-
+            //catch (Exception ex)
+            //{
+            //    return JsonError(ex.GetTrue());
+            //}
+            return null;
         }
     }
 }
