@@ -33,13 +33,18 @@
             font-weight: 400;
             margin: 0 15%;
         }
+
+        .add-img {
+            height: 100%;
+            width: 100%
+        }
     </style>
 </head>
 <body ontouchstart>
     <div class="weui-tab">
         <div class="weui-tab__panel weui-tab__bd">
             <div id="tab4" class="weui-tab__bd-item weui-tab__bd-item--active">
-                <h1 class="publish-title">收购信息发布</h1>
+                <h1 class="publish-title" id="publishTitle">收购信息发布</h1>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">标题</label></div>
                     <div class="weui-cell__bd">
@@ -59,14 +64,25 @@
                         <input id="number" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入数量">
                     </div>
                 </div>
+                <div class="weui-cells__title">图片(最多可以上传3张图片)</div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-grids" id="imgs" data-count="3">
+                            <a href="javascript:;" class="weui-grid js_grid" id="add-img">
+                                <img src="/images/addPic.png" class="add-img" id="btnImg">
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="weui-cells__title">需求描述</div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <textarea id="introduce" class="weui-textarea" placeholder="请输入需求描述文本" rows="3"></textarea>
+                        <textarea id="description" class="weui-textarea" placeholder="请输入需求描述文本" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="weui-btn-area">
                     <a class="weui-btn weui-btn_primary" href="javascript:" id="btnPublish">发布</a>
+                    <a class="weui-btn weui-btn_warn" style="display:none" href="javascript:" id="btnDel">删除(在搜索页不显示)</a>
                 </div>
             </div>
         </div>
@@ -101,29 +117,43 @@
     <script src="/js/jquery-2.1.4.js"></script>
     <script src="/js/fastclick.js"></script>
     <script src="/js/common.js"></script>
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script src="/js/WxJsSdkt.js"></script>
     <script>
         $(function () {
             FastClick.attach(document.body);
-
-            //$("tal2").infinite(100);
-            //$("tal3").infinite(100);
+            $imgContainer = $("#imgs");
+            $("#btnImg").click(function () {
+                openCamera();
+            });
         });
     </script>
     <script src="/js/jquery-weui.js"></script>
     <script>
 
         var loading = false;
-       
-
         $("#btnPublish").click(function () {
             var url = "/pig/PublishInfo/AddJson";
             var data = {};
+            var id = QueryString("id");
+            if (id) {
+                data.id = id;
+            }
             data.openid = getCookie("openid");
             data.price = $("#price").val();
             data.number = $("#number").val();
             data.title = $("#title").val();
-            data.description = $("#description").val(); 
+            data.description = $("#description").val();
             data.role = 1;
+            var imgs = [];
+            var $imgs = $("input.img");
+            var length = $imgs.length;
+            for (var i = 0; i < length; i++) {
+                imgs.push($($imgs[i]).val());
+            }
+            if (imgs.length > 0) {
+                data.imgs = imgs.join(";");
+            }
             $.ajax({
                 type: "post",
                 url: url,
@@ -132,7 +162,6 @@
                 success: function (data) {
                     if (data.isSuccess) {
                         $.toptip('发布成功', 'success');
-                        window.location.href = "/tzc.html";
                     } else {
                         $.toptip('发布失败', 'warning');
                     }
@@ -142,6 +171,72 @@
                 }
             });
         });
+
+        var id = QueryString("id");
+        if (id) {
+            var data = {};
+            data.openid = getCookie("openid");
+            data.id = id;
+            data.token = AccessToken;
+            var queryData = data;
+            $("#publishTitle").text("收购信息编辑");
+            $.ajax({
+                type: "get",
+                url: '/pig/PublishInfo/GetJson',
+                data: data,
+                async: false,
+                success: function (data) {
+                    if (data.isSuccess) {
+                        data = data.data.data;
+                        if (data.publish == 1) {
+                            $("#btnDel").text("删除(在搜索页不显示)");
+                            $("#btnDel").show();
+                            $("#btnDel").click(function () {
+                                $.ajax({
+                                    type: "get",
+                                    url: '/pig/PublishInfo/CancelPub',
+                                    data: queryData,
+                                    async: false,
+                                    success: function (data) {
+                                        if (data.isSuccess) {
+                                            $.toptip('删除成功', 'success');
+                                            window.location.reload();
+                                        }
+                                    },
+                                    error: function () {
+                                        $.toptip('网络错误', 'error');
+                                    }
+                                });
+                            });
+                        }
+                        $("#price").val(data.price);
+                        $("#number").val(data.number);
+                        $("#title").val(data.title);
+                        $("#description").val(data.description);
+                        if (data.imgs && data.imgs.length > 0) {
+                            var imgs = data.imgs.split(';');
+                            if (imgs.length > 0) {
+                                if (imgs.length == 3) {
+                                    $("#add-img").css("display", 'none');
+                                }
+                                for (var i = 0; i < imgs.length; i++) {
+                                    var img = imgs[i];
+                                    $("#add-img").before(' <a href="javascript:;" class="weui-grid js_grid multiImg">' +
+                                        '<input type="hidden" name="img" class="img" value="' + img + '" />'+
+                                        '<div class="close" style="position: absolute;top:0;right:0;height:32px;width:32px"><img src="/images/delPic.png" onclick="delImg(this);"></div><img style="width:108px;height:106px" name="pic" src="' + img + '"/></a>');
+
+                                }
+                            }
+                        }
+                    } else {
+
+                    }
+                },
+                error: function () {
+                    $.toptip('网络错误', 'error');
+                }
+            });
+        }
     </script>
 </body>
 </html>

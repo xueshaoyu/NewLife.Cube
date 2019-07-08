@@ -74,9 +74,10 @@ namespace Pig.Repository.Entity
         //    entity.Title = "abc";
         //    entity.UserId = 0;
         //    entity.OpenId = "abc";
-        //    entity.PubTime = "abc";
+        //    entity.PubTime = DateTime.Now;
         //    entity.Description = "abc";
         //    entity.Price = "abc";
+        //    entity.Imgs = "abc";
         //    entity.Role = 0;
         //    entity.Number = 0;
         //    entity.StartTime = DateTime.Now;
@@ -138,17 +139,6 @@ namespace Pig.Repository.Entity
             //return Meta.SingleCache[id];
 
             return Find(_.Id == id);
-        }
-
-        /// <summary>根据信息发布时间查找</summary>
-        /// <param name="pubtime">信息发布时间</param>
-        /// <returns>实体列表</returns>
-        public static IList<PublishInfo> FindAllByPubTime(String pubtime)
-        {
-            // 实体缓存
-            if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.PubTime == pubtime);
-
-            return FindAll(_.PubTime == pubtime);
         }
         #endregion
 

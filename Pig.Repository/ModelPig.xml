@@ -6,9 +6,10 @@
       <Column Name="Title" DataType="String" Master="True" Description="标题" />
       <Column Name="UserId" DataType="Int32" Description="用户编号" />
       <Column Name="OpenId" DataType="String" Description="关注者OpenId" />
-      <Column Name="PubTime" DataType="String" Description="信息发布时间" />
+      <Column Name="PubTime" DataType="DateTime" Description="信息发布时间" />
       <Column Name="Description" DataType="String" Length="500" Description="收购需求描述" />
       <Column Name="Price" DataType="String" Description="单价" />
+      <Column Name="Imgs" DataType="String" Description="图片地址列表，使用;分割" />
       <Column Name="Role" DataType="Int32" Description="信息分类，屠宰场、运输、养殖户、" />
       <Column Name="Number" DataType="Int32" Description="购买数量" />
       <Column Name="StartTime" DataType="DateTime" Description="开始时间" />

@@ -48,13 +48,13 @@ namespace Pig.Repository.Entity
         [BindColumn("OpenId", "关注者OpenId", "nvarchar(50)")]
         public String OpenId { get { return _OpenId; } set { if (OnPropertyChanging(__.OpenId, value)) { _OpenId = value; OnPropertyChanged(__.OpenId); } } }
 
-        private String _PubTime;
+        private DateTime _PubTime;
         /// <summary>信息发布时间</summary>
         [DisplayName("信息发布时间")]
         [Description("信息发布时间")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("PubTime", "信息发布时间", "nvarchar(50)")]
-        public String PubTime { get { return _PubTime; } set { if (OnPropertyChanging(__.PubTime, value)) { _PubTime = value; OnPropertyChanged(__.PubTime); } } }
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("PubTime", "信息发布时间", "datetime")]
+        public DateTime PubTime { get { return _PubTime; } set { if (OnPropertyChanging(__.PubTime, value)) { _PubTime = value; OnPropertyChanged(__.PubTime); } } }
 
         private String _Description;
         /// <summary>收购需求描述</summary>
@@ -71,6 +71,14 @@ namespace Pig.Repository.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Price", "单价", "nvarchar(50)")]
         public String Price { get { return _Price; } set { if (OnPropertyChanging(__.Price, value)) { _Price = value; OnPropertyChanged(__.Price); } } }
+
+        private String _Imgs;
+        /// <summary>图片地址列表，使用;分割</summary>
+        [DisplayName("图片地址列表")]
+        [Description("图片地址列表，使用;分割")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Imgs", "图片地址列表，使用;分割", "nvarchar(50)")]
+        public String Imgs { get { return _Imgs; } set { if (OnPropertyChanging(__.Imgs, value)) { _Imgs = value; OnPropertyChanged(__.Imgs); } } }
 
         private Int32 _Role;
         /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
@@ -186,6 +194,7 @@ namespace Pig.Repository.Entity
                     case __.PubTime : return _PubTime;
                     case __.Description : return _Description;
                     case __.Price : return _Price;
+                    case __.Imgs : return _Imgs;
                     case __.Role : return _Role;
                     case __.Number : return _Number;
                     case __.StartTime : return _StartTime;
@@ -209,9 +218,10 @@ namespace Pig.Repository.Entity
                     case __.Title : _Title = Convert.ToString(value); break;
                     case __.UserId : _UserId = Convert.ToInt32(value); break;
                     case __.OpenId : _OpenId = Convert.ToString(value); break;
-                    case __.PubTime : _PubTime = Convert.ToString(value); break;
+                    case __.PubTime : _PubTime = Convert.ToDateTime(value); break;
                     case __.Description : _Description = Convert.ToString(value); break;
                     case __.Price : _Price = Convert.ToString(value); break;
+                    case __.Imgs : _Imgs = Convert.ToString(value); break;
                     case __.Role : _Role = Convert.ToInt32(value); break;
                     case __.Number : _Number = Convert.ToInt32(value); break;
                     case __.StartTime : _StartTime = Convert.ToDateTime(value); break;
@@ -254,6 +264,9 @@ namespace Pig.Repository.Entity
 
             /// <summary>单价</summary>
             public static readonly Field Price = FindByName(__.Price);
+
+            /// <summary>图片地址列表，使用;分割</summary>
+            public static readonly Field Imgs = FindByName(__.Imgs);
 
             /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
             public static readonly Field Role = FindByName(__.Role);
@@ -318,6 +331,9 @@ namespace Pig.Repository.Entity
             /// <summary>单价</summary>
             public const String Price = "Price";
 
+            /// <summary>图片地址列表，使用;分割</summary>
+            public const String Imgs = "Imgs";
+
             /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
             public const String Role = "Role";
 
@@ -374,13 +390,16 @@ namespace Pig.Repository.Entity
         String OpenId { get; set; }
 
         /// <summary>信息发布时间</summary>
-        String PubTime { get; set; }
+        DateTime PubTime { get; set; }
 
         /// <summary>收购需求描述</summary>
         String Description { get; set; }
 
         /// <summary>单价</summary>
         String Price { get; set; }
+
+        /// <summary>图片地址列表，使用;分割</summary>
+        String Imgs { get; set; }
 
         /// <summary>信息分类，屠宰场、运输、养殖户、</summary>
         Int32 Role { get; set; }

@@ -1,5 +1,6 @@
 ﻿var baseUrl = "http://wx.ourpigs.com";
 var appid = "wx953d49201b30ee16";
+var AccessToken = "0000";
 //获取url的参数
 function QueryString(item) {
     var sValue = window.location.search.match(new RegExp("[\?\&]" + item + "=([^\&]*)(\&?)", "i"));

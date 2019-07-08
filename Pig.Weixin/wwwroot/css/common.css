@@ -3,3 +3,11 @@ body, html {
     height: 100%;
     -webkit-tap-highlight-color: transparent;
 }
+.weui-media-box_appmsg .weui-media-box__hd {
+    width:80px;
+    height:80px;
+    line-height:80px
+}
+.weui-media-box_appmsg .weui-media-box__thumb{
+    height:80px
+}

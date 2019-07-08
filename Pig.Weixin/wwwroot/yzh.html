@@ -120,7 +120,7 @@
         var loadData = function () {
             $.ajax({
                 type: "post",
-                url: "/Pig/PublishInfo/list?id=0000&role=3",
+                url: "/Pig/PublishInfo/list?token=" + AccessToken +"&role=3",
                 data: pager,
                 async: false,
                 success: function (data) {

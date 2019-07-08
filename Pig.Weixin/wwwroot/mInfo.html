@@ -39,42 +39,12 @@
     <div class="weui-tab">
         <div class="weui-tab__panel weui-tab__bd">
             <div id="tab4" class="weui-tab__bd-item weui-tab__bd-item--active">
-                <div class="weui-panel weui-panel_access">
-                    <div class="weui-panel__bd">
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="images/head.png">
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title" id="userName"></h4>
-                                <p class="weui-media-box__desc" id="role"></p>
-                                <p class="weui-media-box__desc" id="introduce"></p>
-                            </div>
-                        </a>
-                    </div>
+                <div class="weui-cells" id="infoList">
+
                 </div>
-                <div class="weui-cells">
-                    <a id="btnPub" class="weui-cell weui-cell_access" href="javascript:;">
-                        <div class="weui-cell__bd">
-                            <p>发布我的供求信息</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                        </div>
-                    </a>
-                    <a class="weui-cell weui-cell_access" href="mInfo.html">
-                        <div class="weui-cell__bd">
-                            <p>管理我发布的信息</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                        </div>
-                    </a>
-                    <a class="weui-cell weui-cell_access" href="myInfo.html">
-                        <div class="weui-cell__bd">
-                            <p>我的资料</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                        </div>
-                    </a>
+
+                <div id="nodata" style="display:none" class="weui-loadmore weui-loadmore_line">
+                    <span class="weui-loadmore__tips">暂无数据</span>
                 </div>
             </div>
         </div>
@@ -117,28 +87,54 @@
     </script>
     <script src="/js/jquery-weui.js"></script>
     <script>
+        var pager = {
+            pageIndex: 1,
+            pageSize: 15,
+            sort: "pubTime",
+            desc: "desc"
+        };
         var loadData = function () {
+            pager.openid = getCookie("openid");
             $.ajax({
-                type: "post",
-                url: "/pig/user/FindByOpenId",
-                data: { openid: getCookie("openid") },
+                type: "Get",
+                url: "/pig/PublishInfo/GetList?token=" + AccessToken,
+                data: pager,
                 async: false,
                 success: function (data) {
                     if (data.isSuccess) {
-                        var d = data.data;
-                        $("#userName").text(d.name);
-                        $("#introduce").text(d.introduce);
-                        if (d.role == 1) {
-                            $("#role").text('当前角色：屠宰场');
-                            $("#btnPub").prop("href", "tzcPub.html");
-                        }
-                        if (d.role == 2) {
-                            $("#role").text('当前角色：运输队');
-                            $("#btnPub").prop("href", "ysdPub.html");
-                        }
-                        if (d.role == 3) {
-                            $("#role").text('当前角色：养殖户');
-                            $("#btnPub").prop("href", "yzhPub.html");
+                        var d = data.data.list;
+                        if (d && d.length > 0) {
+                            for (var i = 0; i < d.length; i++) {
+                                var item = d[i];
+                                var role = item.user.role;
+                                var url = "";
+                                if (role == 1) {
+                                    url = "tzcPub.html";
+                                }
+                                if (role == 2) {
+                                    url = "ysdPub.html";
+                                }
+                                if (role == 3) {
+                                    url = "yzhPub.html";
+                                }
+                                $("#infoList").append(
+                                    '<a class="weui-cell weui-cell_access" href="' +
+                                    url +
+                                    '?id=' +
+                                    item.id +
+                                    '">' +
+                                    '<div class="weui-cell__bd">' +
+                                    '<p>' +
+                                    item.title +
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div class="weui-cell__ft">' +
+                                    item.pubTime.replace(/T/g, ' ') +
+                                    '</div>' +
+                                    '</a>');
+                            }
+                        } else {
+                            $("#nodata").show();
                         }
                     } else {
 
