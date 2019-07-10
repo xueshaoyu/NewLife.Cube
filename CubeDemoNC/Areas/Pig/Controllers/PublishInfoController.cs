@@ -115,7 +115,7 @@ namespace WebTest.Areas.Pig.Controllers
                 p.RetrieveTotalCount = true;
                 var expression = Search(p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p, searInfo.Role);
                 expression &= PublishInfo._.Publish.Equal(1);
-                var list = Entity<PublishInfo>.FindAll(expression);
+                var list = PublishInfo.FindAll(expression,p);
                 // var list1 = Search(p);
                 // Json输出
                 return Json(ReturnHelper.SuccessMsgDataDCountHttpCode("success", new

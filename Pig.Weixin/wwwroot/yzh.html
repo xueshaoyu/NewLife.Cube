@@ -44,20 +44,20 @@
                 </div>
                 <div id="list1">
                     <!--<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-                        <div class="weui-media-box__hd">
-                            <img class="weui-media-box__thumb" src="/images/tzc/fttzc.png" alt="">
-                        </div>
-                        <div class="weui-media-box__bd">
-                            <h4 class="weui-media-box__title">
-                                成都市福田屠宰厂
-                                <span class="weui-media-box__title-after">13709092055</span>
-                            </h4>
-                            <p class="weui-media-box__desc">地址：斑竹园镇福田村三社98号</p>
-                            <p class="weui-media-box__desc price_desc">收购数量：<span>50</span>头,收购价格:<span>6.90</span>元/500g</p>
-                        </div>
-                    </a>-->
+        <div class="weui-media-box__hd">
+            <img class="weui-media-box__thumb" src="/images/tzc/fttzc.png" alt="">
+        </div>
+        <div class="weui-media-box__bd">
+            <h4 class="weui-media-box__title">
+                成都市福田屠宰厂
+                <span class="weui-media-box__title-after">13709092055</span>
+            </h4>
+            <p class="weui-media-box__desc">地址：斑竹园镇福田村三社98号</p>
+            <p class="weui-media-box__desc price_desc">收购数量：<span>50</span>头,收购价格:<span>6.90</span>元/500g</p>
+        </div>
+    </a>-->
 
-                </div>
+                </div>                    
                 <div class="weui-loadmore" id="loadmore">
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
@@ -172,6 +172,7 @@
             loading = true;
             pager.pageIndex++;
             loadData();
+            loading = false;
 
             //setTimeout(function () {
             //    loading = false;
